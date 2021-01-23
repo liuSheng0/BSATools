@@ -1,21 +1,18 @@
-﻿using EnvDTE;
-using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
 using System;
-using System.IO;
 using System.ComponentModel.Design;
 using System.Globalization;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 using Task = System.Threading.Tasks.Task;
 
-namespace BSAToolsforVS
+namespace VSIXProject1
 {
     /// <summary>
     /// Command handler
     /// </summary>
-    internal sealed class TextCommand
+    internal sealed class Command1
     {
         /// <summary>
         /// Command ID.
@@ -25,7 +22,7 @@ namespace BSAToolsforVS
         /// <summary>
         /// Command menu group (command set GUID).
         /// </summary>
-        public static readonly Guid CommandSet = new Guid("bc0e316a-b667-49fe-b92a-527aacd79354");
+        public static readonly Guid CommandSet = new Guid("2453882d-33d8-47a0-9041-3e5dd7768929");
 
         /// <summary>
         /// VS Package that provides this command, not null.
@@ -33,12 +30,12 @@ namespace BSAToolsforVS
         private readonly AsyncPackage package;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TextCommand"/> class.
+        /// Initializes a new instance of the <see cref="Command1"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private TextCommand(AsyncPackage package, OleMenuCommandService commandService)
+        private Command1(AsyncPackage package, OleMenuCommandService commandService)
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
@@ -51,7 +48,7 @@ namespace BSAToolsforVS
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
-        public static TextCommand Instance
+        public static Command1 Instance
         {
             get;
             private set;
@@ -74,12 +71,12 @@ namespace BSAToolsforVS
         /// <param name="package">Owner package, not null.</param>
         public static async Task InitializeAsync(AsyncPackage package)
         {
-            // Switch to the main thread - the call to AddCommand in TextCommand's constructor requires
+            // Switch to the main thread - the call to AddCommand in Command1's constructor requires
             // the UI thread.
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
-            OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
-            Instance = new TextCommand(package, commandService);
+            OleMenuCommandService commandService = await package.GetServiceAsync((typeof(IMenuCommandService))) as OleMenuCommandService;
+            Instance = new Command1(package, commandService);
         }
 
         /// <summary>
@@ -92,30 +89,17 @@ namespace BSAToolsforVS
         private void Execute(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
+            string message = "Hello World!";
+            string title = "Command1";
 
-            //自定义功能
-            //操作选中功能, 存储到指定路径
-            DTE dte = ServiceProvider.GetServiceAsync(typeof(DTE)).Result as DTE;
-            string selectTXT = string.Empty;
-            string aPath = "..//data//ActiveCodeText.txt";
-            StreamWriter sw = new StreamWriter(aPath);
-            if (dte.ActiveDocument != null && dte.ActiveDocument.Type == "Text")
-            {
-                var selection = (TextSelection)dte.ActiveDocument.Selection;
-                string text = selection?.Text;
-                sw.WriteLine(text);
-                sw.Close();
-                ShowMsgBox("选中代码已经保存！");
-            }
-            else
-            {
-                ShowMsgBox("ERROR！");
-            }
-        }
-
-        public void ShowMsgBox(string msg)
-        {
-            VsShellUtilities.ShowMessageBox(this.package, msg, "", OLEMSGICON.OLEMSGICON_NOICON, OLEMSGBUTTON.OLEMSGBUTTON_OK, OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+            // Show a message box to prove we were here
+            VsShellUtilities.ShowMessageBox(
+                this.package,
+                message,
+                title,
+                OLEMSGICON.OLEMSGICON_INFO,
+                OLEMSGBUTTON.OLEMSGBUTTON_OK,
+                OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
         }
     }
 }

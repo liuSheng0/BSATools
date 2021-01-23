@@ -48,6 +48,7 @@ namespace BSAToolsforVS
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await TextCommand.InitializeAsync(this);
+            await TextCommand_01.InitializeAsync(this);
         }
 
         #endregion

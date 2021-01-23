@@ -2,10 +2,9 @@
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
-using System.IO;
 using System.ComponentModel.Design;
 using System.Globalization;
-using System.Text.RegularExpressions;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
@@ -15,17 +14,17 @@ namespace BSAToolsforVS
     /// <summary>
     /// Command handler
     /// </summary>
-    internal sealed class TextCommand
+    internal sealed class TextCommand_01
     {
         /// <summary>
         /// Command ID.
         /// </summary>
-        public const int CommandId = 0x0100;
+        public const int CommandId = 256;
 
         /// <summary>
         /// Command menu group (command set GUID).
         /// </summary>
-        public static readonly Guid CommandSet = new Guid("bc0e316a-b667-49fe-b92a-527aacd79354");
+        public static readonly Guid CommandSet = new Guid("f7cbf1ae-9889-403f-99c9-10327a1de290");
 
         /// <summary>
         /// VS Package that provides this command, not null.
@@ -33,12 +32,12 @@ namespace BSAToolsforVS
         private readonly AsyncPackage package;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TextCommand"/> class.
+        /// Initializes a new instance of the <see cref="TextCommand_01"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private TextCommand(AsyncPackage package, OleMenuCommandService commandService)
+        private TextCommand_01(AsyncPackage package, OleMenuCommandService commandService)
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
@@ -51,7 +50,7 @@ namespace BSAToolsforVS
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
-        public static TextCommand Instance
+        public static TextCommand_01 Instance
         {
             get;
             private set;
@@ -74,12 +73,12 @@ namespace BSAToolsforVS
         /// <param name="package">Owner package, not null.</param>
         public static async Task InitializeAsync(AsyncPackage package)
         {
-            // Switch to the main thread - the call to AddCommand in TextCommand's constructor requires
+            // Switch to the main thread - the call to AddCommand in TextCommand_01's constructor requires
             // the UI thread.
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
             OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
-            Instance = new TextCommand(package, commandService);
+            Instance = new TextCommand_01(package, commandService);
         }
 
         /// <summary>
@@ -97,15 +96,23 @@ namespace BSAToolsforVS
             //操作选中功能, 存储到指定路径
             DTE dte = ServiceProvider.GetServiceAsync(typeof(DTE)).Result as DTE;
             string selectTXT = string.Empty;
-            string aPath = "..//data//ActiveCodeText.txt";
+            string aPath = "..//data//copy.txt";
             StreamWriter sw = new StreamWriter(aPath);
             if (dte.ActiveDocument != null && dte.ActiveDocument.Type == "Text")
             {
                 var selection = (TextSelection)dte.ActiveDocument.Selection;
                 string text = selection?.Text;
-                sw.WriteLine(text);
-                sw.Close();
-                ShowMsgBox("选中代码已经保存！");
+                string activeDocumentPath = dte.ActiveDocument.FullName;
+                using (StreamReader sr = new StreamReader(activeDocumentPath))
+                {
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        sw.WriteLine(line);
+                    }
+                    sw.Close();
+                }
+                ShowMsgBox("写入成功！");
             }
             else
             {

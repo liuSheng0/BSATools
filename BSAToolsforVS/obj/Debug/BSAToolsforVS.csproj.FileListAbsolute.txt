@@ -20,3 +20,4 @@ C:\Users\ljj\Desktop\BSATools\BSAToolsforVS\BSAToolsforVS\obj\Debug\BSAToolsforV
 C:\Users\ljj\Desktop\BSATools\BSAToolsforVS\BSAToolsforVS\obj\Debug\extension.vsixmanifest
 C:\Users\ljj\Desktop\BSATools\BSAToolsforVS\BSAToolsforVS\obj\Debug\files.json
 C:\Users\ljj\Desktop\BSATools\BSAToolsforVS\BSAToolsforVS\obj\Debug\createTemplateManifests.cache
+C:\Users\ljj\Desktop\BSATools\BSAToolsforVS\BSAToolsforVS\obj\Debug\_EmptyResource.resources.original
