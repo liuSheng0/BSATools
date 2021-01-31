@@ -94,13 +94,14 @@ namespace BSAToolsforVS
             ThreadHelper.ThrowIfNotOnUIThread();
 
             //自定义功能
-            //操作选中功能, 存储到指定路径
+            //读取选中区域, 存储到指定路径
             DTE dte = ServiceProvider.GetServiceAsync(typeof(DTE)).Result as DTE;
             string selectTXT = string.Empty;
             string aPath = "..//data//ActiveCodeText.txt";
             StreamWriter sw = new StreamWriter(aPath);
             if (dte.ActiveDocument != null && dte.ActiveDocument.Type == "Text")
             {
+                //选中区域
                 var selection = (TextSelection)dte.ActiveDocument.Selection;
                 string text = selection?.Text;
                 sw.WriteLine(text);

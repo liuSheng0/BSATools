@@ -2,9 +2,11 @@
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Globalization;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
@@ -91,25 +93,35 @@ namespace BSAToolsforVS
         private void Execute(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-
-            //自定义功能
-            //操作选中功能, 存储到指定路径
+            /*
+             * 自定义功能
+             * 逐行读取当前代码，提取代码中的类名，并以标准格式输出文件
+            */
             DTE dte = ServiceProvider.GetServiceAsync(typeof(DTE)).Result as DTE;
-            string selectTXT = string.Empty;
-            string aPath = "..//data//copy.txt";
-            StreamWriter sw = new StreamWriter(aPath);
+            langKeywords lang = new langKeywords(dte.ActiveDocument.Name);
+            string savePath = "..//data//copy_" + dte.ActiveDocument.Name + ".txt";
+            StreamWriter sw = new StreamWriter(savePath);
+            List<string> classList = new List<string>(); 
+            string myprint = "";
             if (dte.ActiveDocument != null && dte.ActiveDocument.Type == "Text")
             {
-                var selection = (TextSelection)dte.ActiveDocument.Selection;
-                string text = selection?.Text;
                 string activeDocumentPath = dte.ActiveDocument.FullName;
                 using (StreamReader sr = new StreamReader(activeDocumentPath))
                 {
                     string line;
                     while ((line = sr.ReadLine()) != null)
                     {
-                        sw.WriteLine(line);
+                        //逐行读取文档
+                        line = new Regex("//.*").Replace(line, "");//去除注释
+                        string className = lang.judgeClass(line);
+                        if(className != null)
+                        {
+                            classList.Add(className);
+                            className = ConvertTF(className);
+                            myprint += SplitStr(className);
+                        }
                     }
+                    sw.WriteLine(myprint.Trim());
                     sw.Close();
                 }
                 ShowMsgBox("写入成功！");
@@ -122,7 +134,93 @@ namespace BSAToolsforVS
 
         public void ShowMsgBox(string msg)
         {
+            //弹出窗口
             VsShellUtilities.ShowMessageBox(this.package, msg, "", OLEMSGICON.OLEMSGICON_NOICON, OLEMSGBUTTON.OLEMSGBUTTON_OK, OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+        }
+
+        static public string ConvertTF(string str)
+        {
+            //驼峰命名法或帕斯卡命名法转下划线命名法
+            string res = "";
+            for (int i = 0; i < str.Length; i++)
+            {
+                string temp = str[i].ToString();
+                if (Regex.IsMatch(temp, "[A-Z]") && i != 0)
+                {
+                    temp = "_" + temp.ToLower();
+                }
+                res += temp;
+            }
+            res = res.ToLower();
+            return res;
+        }
+
+        static public string SplitStr(string str)
+        {
+            //将下划线命名格式转化为五词一组的分词形式
+            string res = "";
+            string[] wline_arr = str.Split('_');
+            for (int i = 0; i < 5 - wline_arr.Length; i++)
+            {
+                res += "* ";
+            }
+            foreach (string temp in wline_arr)
+            {
+                res = res + temp + ' ';
+            }
+            return res;
+        }
+
+        class langKeywords
+        {
+            //用于使用不同代码类型保留字
+            public string type;
+            public string split;
+            public string classwords;
+            public string[] keywords;
+
+            public langKeywords(string filename)
+            {
+                //判断文件类型
+                if(filename.Contains(".cs"))
+                {
+                    type = "cs";
+                    split = ":";
+                    classwords = "class";
+                    keywords = new string[] { "void", "int", "string" };
+                }
+                else if (filename.Contains(".java") || filename.Contains(".class"))
+                {
+                    type = "java";
+                    split = "extend";
+                    classwords = "class";
+                    keywords = new string[] { "void", "int", "string" };
+                }
+                else
+                {
+                    type = "null";
+                    split = null;
+                    classwords = null;
+                    keywords = null;
+                }
+            }
+
+            public string judgeClass(string str)
+            {
+                //判断此行是否为类，如果是，返回类名；如果不是，返回null
+                string className = null;
+                Regex ifclass = new Regex("((^)|(^[^/]*\\s))" + classwords + "\\s*");
+                if (ifclass.IsMatch(str))
+                {
+                    className = ifclass.Replace(str, "");
+                    if (new Regex(split).IsMatch(className))
+                    {
+                        className = new Regex("\\s*" + split + ".*$").Replace(className, "");
+                    }
+                    className = new Regex("[^0-9a-zA-Z_]*").Replace(className, "");
+                }
+                return className;
+            }
         }
     }
 }
