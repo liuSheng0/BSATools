@@ -1,0 +1,25 @@
+* * * main activity * * my view holder * * * * {
+* * * main activity * * my view holder * * * * {
+* * * main activity * * my view holder * * * * {
+* * * main activity * * my view holder * * * * {
+* * * main activity * * my view holder * * * * {
+* * * main activity * * my view holder * * * * {
+* * * main activity * * my view holder * * * * {
+* * * main activity * * my view holder * * * * {
+* * * main activity * * my view holder * * * * {
+* * * main activity * * my view holder * * * * {
+* * * main activity * * my view holder * * * * {
+* * my view holder * * * main activity * * * on create * * * init animator * * * one click * * * double click * * * init film * * init button select * * init recycler view * on create view holder * on bind view holder * * get item count * * on item click * on item long click * * * choose image * * * choose video * * on activity result * get multipart from uri * * * post video * * * on response * * * on failure * * * fetch feed * * * on response * * * on failure * * * reset btn * * * on restart * * * on start
+* * * main activity * * my view holder * * * * {
+* * * main activity * * my view holder * * * * {
+* * * main activity * * my view holder * * * * {
+* * * main activity * * my view holder * * * * {
+* * * main activity * * my view holder * * * * {
+* * * main activity * * my view holder * * * * {
+* * * main activity * * my view holder * * * * {
+* * * main activity * * my view holder * * * * {
+* * * main activity * * my view holder * * * * {
+* * * main activity * * my view holder * * * * {
+* * * main activity * * my view holder * * * * {
+* * * main activity * * my view holder * * * * {
+* * * main activity * * my view holder * * * * {

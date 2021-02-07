@@ -1,1 +1,30 @@
-* * * video activity * update progress runnableimplements runnable
+* * * video activity
+* * update progress runnable
+isStopUpdatingProgress boolean
+mMediapPlayer MediaPlayer
+mSeekbar SeekBar
+tvCurrentTime TextView
+tvTotalTime TextView
+button Button
+NORMAL int
+PLAYING int
+PAUSING int
+STOPING int
+currentState int
+holder SurfaceHolder
+* * * on create savedInstanceState * * * video activity
+* * * on touch v event * * * video activity
+* * * on touch v event * * * video activity
+* * * on touch v event * * * video activity
+* * * on touch v event * * * video activity
+* * * * start v * * * video activity
+* * * * stop v * * * video activity
+* * * * play  * * * video activity
+* * * * pause v * * * video activity
+* * * * restart v * * * video activity
+* * * on completion mp * * * video activity
+* * on progress changed seekBar progress fromUser * * * video activity
+* on start tracking touch seekBar * * * video activity
+* on stop tracking touch seekBar * * * video activity
+* * * * run  * * update progress runnable
+* * * * run  * * update progress runnable

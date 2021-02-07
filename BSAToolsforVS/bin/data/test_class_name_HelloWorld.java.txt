@@ -1,0 +1,12 @@
+* * my class two * * * hello world * * my method one * * my method two * * my method three
+* * * hello world * * my class one * * * * main
+* * * hello world * * my class one * * * * main
+* * my class two * * my class one * * my method one * * my method two * * my method three
+* * * hello world * * my class one * * * * main
+* * my class two * * my class one * * my method one * * my method two * * my method three
+* * * hello world * * my class two * * * * main
+* * my class one * * my class two * * my method one * * my method two * * my method three
+* * * hello world * * my class two * * * * main
+* * my class one * * my class two * * my method one * * my method two * * my method three
+* * * hello world * * my class two * * * * main
+* * my class one * * my class two * * my method one * * my method two * * my method three

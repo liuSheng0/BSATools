@@ -1,1 +1,38 @@
-* * * main activity * * my view holder
+* * * main activity
+* * my view holder
+PICK_IMAGE int
+PICK_VIDEO int
+mRv RecyclerView
+mFeeds List<Feed>
+mSelectedImage Uri
+mSelectedVideo Uri
+mBtn Button
+mBtnRefresh Button
+loveAnimator LoveAnimator
+REQUEST_PERMISSION_CODE int
+* * * on create savedInstanceState * * * main activity
+* * * init animator  * * * main activity
+* * * one click  * * * main activity
+* * * double click  * * * main activity
+* * * init film  * * * main activity
+* * init button select  * * * main activity
+* * init recycler view  * * * main activity
+* on create view holder viewGroup i * * * main activity
+* on bind view holder viewHolder i * * * main activity
+* * get item count  * * * main activity
+* * on item click view position * * * main activity
+* on item long click view position * * * main activity
+* * * * { itemView * * my view holder
+* * * choose image  * * * main activity
+* * * choose video  * * * main activity
+* * on activity result requestCode resultCode data * * * main activity
+* get multipart from uri name uri * * * main activity
+* * * post video  * * * main activity
+* * * on response call response * * * main activity
+* * * on failure call t * * * main activity
+* * * fetch feed view * * * main activity
+* * * on response call response * * * main activity
+* * * on failure call t * * * main activity
+* * * reset btn  * * * main activity
+* * * on restart  * * * main activity
+* * * on start  * * * main activity
