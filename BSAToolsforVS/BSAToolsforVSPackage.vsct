@@ -77,7 +77,7 @@
         <Parent guid="guidBSAToolsforVSPackageCmdSet1" id="MyMenuGroup" />
         <Icon guid="guidImages1" id="bmpPic1" />
         <Strings>
-          <ButtonText>提取代码中的类</ButtonText>
+          <ButtonText>特征提取</ButtonText>
         </Strings>
       </Button>
     </Buttons>

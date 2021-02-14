@@ -1,0 +1,25 @@
+* * my view holder * * * main activity * * my method two
+* * my view holder * * * main activity * * my method two
+* * my view holder * * * main activity * * my method two
+* * my view holder * * * main activity * * my method two
+* * my view holder * * * main activity * * my method two
+* * my view holder * * * main activity * * my method two
+* * my view holder * * * main activity * * my method two
+* * my view holder * * * main activity * * my method two
+* * my view holder * * * main activity * * my method two
+* * my view holder * * * main activity * * my method two
+* * my view holder * * * main activity * * my method two
+* * * main activity * * my view holder * on create view holder * * * choose image * * * choose video * * on activity result * get multipart from uri * * * post video * * * on response * * * on failure * * * fetch feed * * * reset btn * * * on restart * * * on start * * * on create * * * init animator * * * one click * * * double click * * * init film * * init button select * * init recycler view * on bind view holder * * get item count * * on item click * on item long click
+* * my view holder * * * main activity * * my method two
+* * my view holder * * * main activity * * my method two
+* * my view holder * * * main activity * * my method two
+* * my view holder * * * main activity * * my method two
+* * my view holder * * * main activity * * my method two
+* * my view holder * * * main activity * * my method two
+* * my view holder * * * main activity * * my method two
+* * my view holder * * * main activity * * my method two
+* * my view holder * * * main activity * * my method two
+* * my view holder * * * main activity * * my method two
+* * my view holder * * * main activity * * my method two
+* * my view holder * * * main activity * * my method two
+* * my view holder * * * main activity * * my method two

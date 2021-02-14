@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.ComponentModel.Design;
 using System.Globalization;
 using System.IO;
@@ -91,40 +92,42 @@ namespace BSAToolsforVS
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event args.</param>
+        
         private void Execute(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             /*
              * 自定义功能
-             * 逐行读取当前代码，提取代码中的类名，并以标准格式输出文件
+             * 特征提取
             */
             DTE dte = ServiceProvider.GetServiceAsync(typeof(DTE)).Result as DTE;
             langKeywords lang = new langKeywords(dte.ActiveDocument.Name);
-            string savePath = "..//data//copy_" + dte.ActiveDocument.Name + ".txt";
+            string savePath = "..//data//inf_" + dte.ActiveDocument.Name + ".txt";
             StreamWriter sw = new StreamWriter(savePath);
             if (dte.ActiveDocument != null && dte.ActiveDocument.Type == "Text")
             {
                 string activeDocumentPath = dte.ActiveDocument.FullName;
-                Stack<string> braceStack = new Stack<string>();//栈，用于判断当前类或方法
-                string nowClassOrMethod = "*";//当前类或方法的迭代，用于判断目前为类还是方法
-                string[] nowClassMethod = new String[] { "*", "*" };//判断当前类和方法内的迭代，0为类，1为方法，只在flag的值位置有效
-                int flagClassOrMethod = 0;//判断目前为类内还是方法内，0为类，1为方法
-                braceStack.Push(nowClassOrMethod);
                 List<string> classList = new List<string>();//列表用于存储全部类
+                List<string> methodList = new List<string>();//列表用于存储全部方法
                 Dictionary<string, List<string>> classMethods = new Dictionary<string, List<string>>();//字典用于存储类的全部方法
-                List<string> propertyList = new List<string>();//列表用于存储全部类内属性
-                Dictionary<string, string> propertyClass = new Dictionary<string, string>();//字典用于存储类内属性的类
-                methodTagNowClass[] methodTagNowClasses = new methodTagNowClass[100];
-                int methodCount = 0;
+                Dictionary<string, string> propertyClass = new Dictionary<string, string>();//字典用于存储在类内方法外创建的类的实例
+                methodTagNowClass[] methodTagNowClasses = new methodTagNowClass[100];//用于存储方法的目标类和自身类
+                Dictionary<string, List<string>> methodUsese = new Dictionary<string, List<string>>();//字典用于存储使用方法的全部实例
                 string myprint = "";
                 using (StreamReader sr = new StreamReader(activeDocumentPath))
                 {
+                    Stack<string> braceStack = new Stack<string>();//栈，用于判断当前类或方法
+                    string nowClassOrMethod = "*";//当前类或方法的迭代，用于判断目前为类还是方法
+                    string[] nowClassMethod = new String[] { "*", "*" };//判断当前类和方法内的迭代，0为类，1为方法，只在flag的值位置有效
+                    int flagClassOrMethod = 0;//判断目前为类内还是方法内，0为类，1为方法
+                    braceStack.Push(nowClassOrMethod);
+                    int methodCount = 0;
                     string line;//每行代码
                     while ((line = sr.ReadLine()) != null)
                     {
-                        //逐行读取文档
+                        //第一遍循环，读取文档类名信息，类的方法信息，实例信息
                         line = new Regex("//.*").Replace(line, "");//去除注释
-                        //判断是否为类
+                        //读取代码中的类名生成classList和classMethods-key
                         string className = lang.judgeClass(line);
                         if (className != null)
                         {
@@ -144,58 +147,42 @@ namespace BSAToolsforVS
                             myprint += '\n';
                             myprint += AdjustStr(className);
                         }
-                    }
-                }
-                using (StreamReader sr = new StreamReader(activeDocumentPath))
-                {
-                    string line;//每行代码
-                    while ((line = sr.ReadLine()) != null)
-                    {
-                        //逐行读取文档
-                        line = new Regex("//.*").Replace(line, "");//去除注释
-                        //判断是否为类
-                        string className = lang.judgeClass(line);
-                        if(className != null)
-                        {
-                            flagClassOrMethod = 0;
-                            nowClassOrMethod = className;
-                            nowClassMethod[flagClassOrMethod] = className;
-                        }
                         else
                         {
                             string[] method = lang.judgeMethod(line);
-                            //判断是否为方法
+                            //读取代码中的方法名生成methodTagNowClasses-key和classMethods-value
                             if (method[0] != null)
                             {
                                 string nowClass = nowClassMethod[0];
                                 string methodName = method[0];
                                 string methodParameter = method[1];
-                                methodTagNowClasses[methodCount++] = new methodTagNowClass(method[0], methodParameter, nowClass, new List<string>());
-                                methodTagNowClasses[methodCount - 1].disTagClass.Add(nowClass);
+                                methodList.Add(methodName);
+                                methodTagNowClasses[methodCount] = new methodTagNowClass(method[0], methodParameter, nowClass, new List<string>());
+                                methodTagNowClasses[methodCount].disTagClass.Add(nowClass);
                                 foreach (string item in method[2].Split(' '))
                                 {
                                     if (classList.Contains(item))
                                     {
-                                        methodTagNowClasses[methodCount - 1].disTagClass.Add(item);
+                                        methodTagNowClasses[methodCount].disTagClass.Add(item);
                                     }
                                 }
-                                if (classList.Contains(nowClass))
+                                if (classList.Contains(nowClass) && !classMethods[nowClass].Contains(methodName))
                                 {
                                     classMethods[nowClass].Add(methodName);
                                 }
+                                methodCount++;
                                 flagClassOrMethod = 1;
                                 nowClassOrMethod = method[0];
                                 nowClassMethod[flagClassOrMethod] = method[0];
                                 methodName = ConvertTF(methodName);
                                 myprint = myprint + '\n' + AdjustStr(methodName) + " " + methodParameter + " " + AdjustStr(ConvertTF(nowClass));
                             }
-                            //获取类内方法外声明的属性
+                            //获取类内方法外声明的类的实例，生成propertyClass
                             else if (flagClassOrMethod == 0)
                             {
                                 string[] property = lang.judgeProperty(line);
-                                if(property[0] != null)
+                                if (property[0] != null)
                                 {
-                                    propertyList.Add(property[0]);
                                     try
                                     {
                                         propertyClass.Add(property[0], property[1]);
@@ -209,23 +196,7 @@ namespace BSAToolsforVS
                                 }
                             }
                         }
-                        if (flagClassOrMethod == 1)
-                        {
-                            line = new Regex("\".*?\"").Replace(line, " ");
-                            string[] splitLine = line.Split(new char[] { '.', ' ', '(', ')' ,';' });
-                            foreach (string words in splitLine)
-                            {
-                                if (classList.Contains(words))
-                                {
-                                    methodTagNowClasses[methodCount - 1].disTagClass.Add(words);
-                                }
-                                else if (propertyClass.ContainsKey(words))
-                                {
-                                    methodTagNowClasses[methodCount - 1].disTagClass.Add(propertyClass[words]);
-                                }
-                            }
-                        }
-                        //判断类或方法情况
+                        //用栈的方式匹配当前类或者方法
                         foreach (char c in line)
                         {
                             if (c == '{')
@@ -251,37 +222,139 @@ namespace BSAToolsforVS
                             }
                         }
                     }
-                    StreamWriter sw_test_class_name = new StreamWriter("..//data//test_class_name_" + dte.ActiveDocument.Name + ".txt");
-                    StreamWriter sw_test_method_name = new StreamWriter("..//data//test_method_name_" + dte.ActiveDocument.Name + ".txt");
-                    foreach (methodTagNowClass method in methodTagNowClasses)
+                }
+
+                using (StreamReader sr = new StreamReader(activeDocumentPath))
+                {
+                    Stack<string> braceStack = new Stack<string>();//栈，用于判断当前类或方法
+                    string nowClassOrMethod = "*";//当前类或方法的迭代，用于判断目前为类还是方法
+                    string[] nowClassMethod = new String[] { "*", "*" };//判断当前类和方法内的迭代，0为类，1为方法，只在flag的值位置有效
+                    int flagClassOrMethod = 0;//判断目前为类内还是方法内，0为类，1为方法
+                    braceStack.Push(nowClassOrMethod);
+                    int methodCount = 0;
+                    string line;//每行代码
+                    while ((line = sr.ReadLine()) != null)
                     {
-                        if (method != null)
+                        //第二遍读取文档，生成methodTagNowClasses的tagClass
+                        line = new Regex("//.*").Replace(line, "");//去除注释
+                        //标记为类内
+                        string className = lang.judgeClass(line);
+                        if(className != null)
                         {
-                            string[] disTagClassArr = method.disTagClass.ToArray();
-                            string[] classArr = classList.ToArray();
-                            string[] TagClasses = classArr.Where(c => !disTagClassArr.Contains(c)).ToArray();
-                            foreach (string tagClass in TagClasses)
+                            flagClassOrMethod = 0;
+                            nowClassOrMethod = className;
+                            nowClassMethod[flagClassOrMethod] = className;
+                        }
+                        else
+                        {
+                            string[] method = lang.judgeMethod(line);
+                            //标记为方法内
+                            if (method[0] != null)
                             {
-                                string tagClassMethodStr = "";
-                                if (classMethods.ContainsKey(tagClass))
+                                methodCount++;
+                                flagClassOrMethod = 1;
+                                nowClassOrMethod = method[0];
+                                nowClassMethod[flagClassOrMethod] = method[0];
+                            }
+                        }
+                        if (flagClassOrMethod == 1)//当前方法内
+                        {
+                            line = new Regex("\".*?\"").Replace(line, " ");
+                            string[] splitLine = line.Split(new char[] { '.', ' ', '(', ')' ,';' });
+                            foreach (string words in splitLine)
+                            {
+                                //判断是否声明了其他类，若声明，则将此类加入distagclass
+                                if (classList.Contains(words))
                                 {
-                                    foreach (string item in classMethods[tagClass])
+                                    methodTagNowClasses[methodCount - 1].disTagClass.Add(words);
+                                }
+                                //判断是否使用了自身类声明的其他类的实例，若使用，则将此实例对应的类加入distagClass
+                                else if (propertyClass.ContainsKey(words))
+                                {
+                                    methodTagNowClasses[methodCount - 1].disTagClass.Add(propertyClass[words]);
+                                }
+                                //判断方法是否使用了其他实例，生成methodUsese
+                                else if (methodList.Contains(words))
+                                {
+                                    if (!methodUsese.ContainsKey(methodTagNowClasses[methodCount - 1].methodName))
                                     {
-                                        tagClassMethodStr += AdjustStr(ConvertTF(item)) + ' ';
+                                        methodUsese.Add(methodTagNowClasses[methodCount - 1].methodName, new List<string>());
+                                    }
+                                    if (!methodUsese[methodTagNowClasses[methodCount - 1].methodName].Contains(words))
+                                    {
+                                        methodUsese[methodTagNowClasses[methodCount - 1].methodName].Add(words);
                                     }
                                 }
-                                string writeline_class_name = (AdjustStr(ConvertTF(tagClass)) + " " + AdjustStr(ConvertTF(method.nowClass)) + " " + tagClassMethodStr).Trim();
-                                string writeline_method_name = (AdjustStr(ConvertTF(method.methodName)) + " " + method.methodParameters).Trim();
-                                sw_test_class_name.WriteLine(writeline_class_name);
-                                sw_test_method_name.WriteLine(writeline_method_name);
+                            }
+                        }
+                        //用栈的方式匹配当前类或者方法
+                        foreach (char c in line)
+                        {
+                            if (c == '{')
+                            {
+                                braceStack.Push(nowClassOrMethod);
+                            }
+                            else if (c == '}')
+                            {
+                                if (braceStack.Peek() == nowClassOrMethod)
+                                {
+                                    braceStack.Pop();
+                                    nowClassOrMethod = braceStack.Peek();
+                                    if (classList.Contains(nowClassOrMethod))
+                                    {
+                                        flagClassOrMethod = 0;
+                                    }
+                                    else
+                                    {
+                                        flagClassOrMethod = 1;
+                                    }
+                                    nowClassMethod[flagClassOrMethod] = nowClassOrMethod;
+                                }
                             }
                         }
                     }
-                    sw.WriteLine(myprint.Trim());
-                    sw.Close();
-                    sw_test_class_name.Close();
-                    sw_test_method_name.Close();
                 }
+
+                //开始生成数据集
+                StreamWriter sw_test_class_name = new StreamWriter("..//data//class_name.txt");
+                StreamWriter sw_test_method_name = new StreamWriter("..//data//method_name.txt");
+                StreamWriter sw_test_dis = new StreamWriter("..//data//dis.txt");
+                foreach (methodTagNowClass method in methodTagNowClasses)
+                {
+                    if (method != null)
+                    {
+                        string[] disTagClassArr = method.disTagClass.ToArray();
+                        string[] classArr = classList.ToArray();
+                        string[] TagClasses = classArr.Where(c => !disTagClassArr.Contains(c)).ToArray();
+                        foreach (string tagClass in TagClasses)
+                        {
+                            string tagClassMethodStr = "";
+                            if (classMethods.ContainsKey(tagClass))
+                            {
+                                foreach (string item in classMethods[tagClass])
+                                {
+                                    tagClassMethodStr += AdjustStr(ConvertTF(item)) + ' ';
+                                }
+                            }
+                            
+                            double TCTagCount = calculateTC(methodUsese[method.methodName], classMethods[tagClass]);
+                            classMethods[method.nowClass].Remove(method.methodName);
+                            double TCNowCount = calculateTC(methodUsese[method.methodName], classMethods[method.nowClass]);
+                            classMethods[method.nowClass].Add(method.methodName);
+                            string writeline_dis = doubleToStandardString(TCTagCount) + " " + doubleToStandardString(TCNowCount);
+                            string writeline_class_name = (AdjustStr(ConvertTF(tagClass)) + " " + AdjustStr(ConvertTF(method.nowClass)) + " " + tagClassMethodStr).Trim();
+                            string writeline_method_name = (AdjustStr(ConvertTF(method.methodName)) + " " + method.methodParameters).Trim();
+                            sw_test_class_name.WriteLine(writeline_class_name);
+                            sw_test_method_name.WriteLine(writeline_method_name);
+                            sw_test_dis.WriteLine(writeline_dis);
+                        }
+                    }
+                }
+                sw.WriteLine(myprint.Trim());
+                sw.Close();
+                sw_test_class_name.Close();
+                sw_test_method_name.Close();
+                sw_test_dis.Close();
                 ShowMsgBox("写入成功！");
             }
             else
@@ -294,6 +367,35 @@ namespace BSAToolsforVS
         {
             //弹出窗口
             VsShellUtilities.ShowMessageBox(this.package, msg, "", OLEMSGICON.OLEMSGICON_NOICON, OLEMSGBUTTON.OLEMSGBUTTON_OK, OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+        }
+
+        static public double calculateTC(List<string> smlist, List<string> sclist)
+        {
+            //计算T-C距离
+            double res = 1.0;
+            string[] sm = smlist.ToArray();
+            string[] sc = sclist.ToArray();
+            var smjsc = sm.Intersect(sc).ToList().ToArray();
+            var smbsc = sm.Union(sc).ToList().ToArray();
+            res = 1.0 - (double)smjsc.Length / (double)smbsc.Length;
+            return res;
+        }
+
+        static public string doubleToStandardString(double d)
+        {
+            string res = d.ToString();
+            if(!res.Contains("."))
+            {
+                res += ".";
+            }
+            if(res.Length < 22)
+            {
+                for(int i = res.Length; i < 22; i++)
+                {
+                    res += "0";
+                }
+            }
+            return res;
         }
 
         static public string ConvertTF(string str)
@@ -331,6 +433,7 @@ namespace BSAToolsforVS
 
         class methodTagNowClass
         {
+            //用于存储方法的方法名，方法的当前类，方法的非目标类，方法的参数
             public string methodName;
             public string nowClass;
             public List<string> disTagClass;

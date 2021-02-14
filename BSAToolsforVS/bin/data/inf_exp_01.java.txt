@@ -1,5 +1,4 @@
 * * * main activity
-* * my view holder
 PICK_IMAGE int
 PICK_VIDEO int
 mRv RecyclerView
@@ -22,7 +21,8 @@ REQUEST_PERMISSION_CODE int
 * * get item count  * * * main activity
 * * on item click view position * * * main activity
 * on item long click view position * * * main activity
-* * * * { itemView * * my view holder
+* * my view holder
+* * my method two  * * my view holder
 * * * choose image  * * * main activity
 * * * choose video  * * * main activity
 * * on activity result requestCode resultCode data * * * main activity

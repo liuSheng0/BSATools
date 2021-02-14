@@ -9,7 +9,7 @@
 * * get item count
 * * on item click view position
 * on item long click view position
-* * * * { itemView
+* * my method two
 * * * choose image
 * * * choose video
 * * on activity result requestCode resultCode data

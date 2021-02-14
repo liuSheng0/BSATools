@@ -1,11 +1,12 @@
 * * * hello world
-* * my class one
-* * my class two
 a int
 * * * * main args * * * hello world
+* * my class one
+demo myClassTwo
 * * my method one  * * my class one
 * * my method two  * * my class one
 * * my method three  * * my class one
+* * my class two
 * * my method one  * * my class two
 * * my method two  * * my class two
 * * my method three  * * my class two
