@@ -2,6 +2,8 @@ const vscode = require('vscode');
 const jj = require('./dependences/judgeJava');
 const sr = require('./dependences/stringRule');
 const mc = require('./dependences/methodTagNowClassJar');
+const fs = require('fs');
+var path = require('path');
 const { methodTagNowClass } = require('./dependences/methodTagNowClassJar');
 
 module.exports = function(context) {
@@ -13,7 +15,7 @@ module.exports = function(context) {
     let methodTagNowClasses = [];//用于存储方法的目标类和自身类
 
     let geturi = vscode.commands.registerCommand('extension.getFeature', (uri) => {
-        showInfMessage(`当前文件(夹)路径是：${uri ? uri.path : '空'}`);
+        showInfMessage(`正在进行特征提取`);
         let editor = vscode.window.activeTextEditor;
         if(!editor) {
             return;
@@ -199,15 +201,27 @@ module.exports = function(context) {
                 write_method_name += writeline_method_name + "\n";
             });
         });
-
-        console.log(write_method_name);
-        console.log(write_class_name);
-        console.log(write_dis);
+        writefile(__dirname + '/../data/test_method_name.txt', write_method_name);
+        writefile(__dirname + '/../data/test_class_name.txt', write_class_name);
+        writefile(__dirname + '/../data/test_dis.txt', write_dis);
+        showInfMessage(`特征提取成功`);
     });
 
 
     context.subscriptions.push(geturi);
 };
+
+function writefile(path, msg) {
+    fs.writeFile(path, msg, { 'flag': 'a' }, function (error) {
+        if (error) {
+          console.log('写入'+path+'失败')
+          return false
+        } else {
+          console.log('写入'+path+'成功')
+          return true
+        }
+    });
+}
 
 function showInfMessage(msg) {
 	vscode.window.showInformationMessage(msg);
