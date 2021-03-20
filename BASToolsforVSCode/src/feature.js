@@ -3,7 +3,7 @@ const jj = require('./dependences/judgeJava');
 const sr = require('./dependences/stringRule');
 const mc = require('./dependences/methodTagNowClassJar');
 const fs = require('fs');
-var path = require('path');
+const path = require('path');
 const { methodTagNowClass } = require('./dependences/methodTagNowClassJar');
 
 module.exports = function(context) {
@@ -201,13 +201,11 @@ module.exports = function(context) {
                 write_method_name += writeline_method_name + "\n";
             });
         });
-        writefile(__dirname + '/../data/test_method_name.txt', write_method_name);
-        writefile(__dirname + '/../data/test_class_name.txt', write_class_name);
-        writefile(__dirname + '/../data/test_dis.txt', write_dis);
+        writefile(__dirname + '/../data/methodinfo.txt', write_method_name);
+        writefile(__dirname + '/../data/classinfo.txt', write_class_name);
+        writefile(__dirname + '/../data/dis.txt', write_dis);
         showInfMessage(`特征提取成功`);
     });
-
-
     context.subscriptions.push(geturi);
 };
 

@@ -1,0 +1,48 @@
+* * * on create savedInstanceState
+* * * on touch v event
+* * * on touch v event
+* * * on touch v event
+* * * on touch v event
+* * * * start v
+* * * * stop v
+* * * * pause v
+* * * * restart v
+* * * on completion mp
+* * on progress changed seekBar progress fromUser
+* on start tracking touch seekBar
+* * * * run
+* * * * run
+* * * on create savedInstanceState
+* * * on touch v event
+* * * on touch v event
+* * * on touch v event
+* * * on touch v event
+* * * * start v
+* * * * stop v
+* * * * pause v
+* * * * restart v
+* * * on completion mp
+* * on progress changed seekBar progress fromUser
+* on start tracking touch seekBar
+* * * * run
+* * * * run
+* * * * main args
+* * my method one a b
+* * my method two
+* * my method three
+* * my method three
+* * my method one
+* * my method two
+* * my method two
+* * my method three
+* * my method three
+* * * * main args
+* * my method one a b
+* * my method two
+* * my method three
+* * my method three
+* * my method one
+* * my method two
+* * my method two
+* * my method three
+* * my method three

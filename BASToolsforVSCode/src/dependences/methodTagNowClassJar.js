@@ -1,4 +1,4 @@
-//自定包
+//自定类
 const methodTagNowClassJar = {
     methodTagNowClass: function(mName, mParameters, nClass, tClass) {
         this.methodName = mName;

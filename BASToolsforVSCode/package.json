@@ -34,6 +34,10 @@
       {
         "command": "extension.getFeature",
         "title": "特征提取"
+      },
+      {
+        "command": "extension.test",
+        "title": "特征依恋预测"
       }
     ],
 
@@ -43,6 +47,12 @@
         "key": "ctrl+f10",
         "mac": "cmd+f10",
         "when": "editorTextFocus"
+      },
+      {
+        "command": "extension.test",
+        "key": "ctrl+f9",
+        "mac": "cmd+f9",
+        "when": "editorTextFocus"
       }
     ],
 
@@ -51,6 +61,11 @@
         {
           "when" : "editorFocus",
           "command": "extension.getFeature",
+          "group": "navigation@5"
+        },
+        {
+          "when" : "editorFocus",
+          "command": "extension.test",
           "group": "navigation@5"
         }
       ]
