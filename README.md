@@ -9,3 +9,4 @@
 | demo_03 | 实现了对java代码的文本特征提取的工作，生成class_name和method_name文件 |
 | demo_04 | 实现了对java代码的全部特征提取的工作，生成dis文件。修复了demo_03的一些bug |
 | 更新 | vs插件转为vscode插件 |
+| 05 | 模型部署，实现基本功能 |
