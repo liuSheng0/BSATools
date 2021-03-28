@@ -3,11 +3,13 @@ const judgeJava = {
     //判断此行是否为类，如果是，返回类名；如果不是，返回null
     judgeClass: function(str) {
         var className = null;
-        var rgclass = new RegExp(/((^)|(^[^/]*\s))class\s*/);
+        var rgclass = new RegExp(/([^/]*\s)(class|interface)\s*/);
         if(rgclass.test(str)) {
             className = str.replace(rgclass, "");
             className = className.replace(/\s*extends.*/, "");
             className = className.replace(/\s*implements.*/, "");
+            className = className.replace(/\(.*?\)/);
+            className = className.replace(/<.*>/);
             className = className.replace(/[^0-9a-zA-Z_]/g, "");
         }
         return className;
@@ -24,7 +26,7 @@ const judgeJava = {
         if (strsParameter != null) {
             strParameter = strsParameter[0];
         }
-        var strSplit = strName.trim().split(' ');
+        var strSplit = strName.trim().replace(/\,\s/, "").split(' ');
         let i = 0;
         while (i < strSplit.length && modifierwords.indexOf(strSplit[i]) == -1) {
             i++;
@@ -34,7 +36,10 @@ const judgeJava = {
         }
         i--;
         if (i+2 < strSplit.length && strSplit[i+1] != "class" && rg.test(str) && str.indexOf(';') == -1) {
-            method[0] = strSplit[i+2];
+            if(strSplit[i+2] != '{')
+                method[0] = strSplit[i+2];
+            else
+                method[0] = strSplit[i+1];
             strParameter = strParameter.replace(/\(|\)/g, "");
             var splitParameter = strParameter.split(',');
             for (let i in splitParameter) {
@@ -68,6 +73,29 @@ const judgeJava = {
             property[1] = strSplit[i + 1];
         }
         return property;
+    },
+
+    //判断此行是否为包，如果是，返回包名；如果不是，返回null
+    judgePackage: function(str) {
+        var packageName = null;
+        var rgpackage = new RegExp(/package\s*/);
+        if(rgpackage.test(str)) {
+            packageName = str.replace(rgpackage, "");
+            packageName = packageName.replace(";","");
+        }
+        return packageName;
+    },
+
+    //根据包名判断此行是否为引用，如果是，返回引用名；如果不是，返回null
+    judgeImport: function(str, packageName) {
+        var importName = null;
+        var rgimport = new RegExp(/import\s*/);
+        var rgstatic = new RegExp(/static\s*/);
+        var rgpackage = new RegExp(packageName+'.');
+        if(rgpackage.test(str) && rgimport.test(str)) {
+            importName = str.replace(rgimport, "").replace(rgstatic, "").replace(rgpackage, "").replace(";", "");
+        }
+        return importName;
     },
 };
 

@@ -9,6 +9,7 @@ function activate(context) {
 	console.log(vscode);
     require('./feature')(context); // 特征提取，将三类特征存入data文件夹中
 	require('./test')(context); // 预测，调用pymodel中的predict子程序
+	require('./findfile')(context);
 }
 
 function deactivate() {

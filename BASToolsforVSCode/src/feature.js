@@ -6,6 +6,12 @@ const fs = require('fs');
 const path = require('path');
 const { methodTagNowClass } = require('./dependences/methodTagNowClassJar');
 
+const methodinfoPath = __dirname + '/../data/methodinfo.txt';
+const classinfoPath = __dirname + '/../data/classinfo.txt';
+const disPath = __dirname + '/../data/dis.txt';
+const resPath = __dirname + '/../data/info.txt';
+const dirPath = __dirname + '/../data/fileinfo.txt';
+
 module.exports = function(context) {
     let classList = [];//列表用于存储全部类
     let methodList = [];//列表用于存储全部方法
@@ -15,6 +21,10 @@ module.exports = function(context) {
     let methodTagNowClasses = [];//用于存储方法的目标类和自身类
 
     let geturi = vscode.commands.registerCommand('extension.getFeature', (uri) => {
+        try { fs.unlinkSync(methodinfoPath) } catch {;}
+        try { fs.unlinkSync(classinfoPath) } catch {;}
+        try { fs.unlinkSync(disPath) } catch {;}
+        try { fs.unlinkSync(resPath) } catch {;}
         showInfMessage(`正在进行特征提取`);
         let editor = vscode.window.activeTextEditor;
         if(!editor) {
@@ -28,7 +38,81 @@ module.exports = function(context) {
         let flagClassMethod = 0;//当前状态，0为类，1为方法
         let methodCount = 0;
         braceStack.push(nowClassOrMethod);
-        //第一遍循环，读取文档类名信息，类的方法信息，实例信息
+        if(fs.existsSync(dirPath)){
+            let filedirs = readfile(dirPath).toString().split(/\r?\n/);
+            filedirs.forEach(filedir => {
+                console.log(filedir);
+                if(fs.existsSync(filedir)){
+                    let everfilelines = readfile(filedir).toString().split(/\r?\n/);
+                    braceStack = [];//括号匹配栈
+                    nowClassOrMethod = "*";//当前类或者方法
+                    nowClassMethod = ["*", "*"];//当前类，方法
+                    flagClassMethod = 0;//当前状态，0为类，1为方法
+                    methodCount = 0;
+                    everfilelines.forEach((line) => {
+                        line = line.replace(/\/\/.*/g, "");//去除注释
+                        let className = jj.judgeClass(line);
+                        if(className != null) {
+                            classList.push(className);
+                            if(!classMethods.hasOwnProperty(className)) {
+                                classMethods[className] = [];
+                            }
+                            flagClassMethod = 0;
+                            nowClassOrMethod = className;
+                            nowClassMethod[flagClassMethod] = className;
+                            console.log(sr.ConvertTF(className));
+                        }
+                        else {
+                            let method = jj.judgeMethod(line);
+                            if (method[0] != null) {
+                                let nowClass = nowClassMethod[0];
+                                let methodName = method[0];
+                                let methodParameter = method[1];
+                                methodList.push(methodName);
+                                if (classList.indexOf(nowClass) != -1 && classMethods[nowClass].indexOf(methodName) == -1) {
+                                    classMethods[nowClass].push(methodName);
+                                }
+                                methodCount++;
+                                flagClassMethod = 1;
+                                nowClassOrMethod = method[0];
+                                nowClassMethod[flagClassMethod] = method[0];
+                                console.log(sr.AdjustStr(methodName) + " " + methodParameter + " " + sr.AdjustStr(nowClass));
+                            }
+                        }
+    
+                        //括号匹配
+                        for(let i = 0; i < line.length; i++) {
+                            let c = line.charAt(i);
+                            if(c == '{') {
+                                braceStack.push(nowClassOrMethod);
+                            }
+                            else if(c == '}') {
+                                if (braceStack[braceStack.length - 1] == nowClassOrMethod) {
+                                    braceStack.pop();
+                                    nowClassOrMethod = braceStack[braceStack.length - 1];
+                                    if (classList.indexOf(nowClassOrMethod) != -1) {
+                                        flagClassMethod = 0;
+                                    }
+                                    else {
+                                        flagClassMethod = 1;
+                                    }
+                                    nowClassMethod[flagClassMethod] = nowClassOrMethod;
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+
+        braceStack = [];//括号匹配栈
+        nowClassOrMethod = "*";//当前类或者方法
+        nowClassMethod = ["*", "*"];//当前类，方法
+        flagClassMethod = 0;//当前状态，0为类，1为方法
+        methodCount = 0;
+        console.log("----------------------");
+        //第一遍循环，读取类名信息，类的方法信息，实例信息
         lines.forEach((line) => {
             line = line.replace(/\/\/.*/g, "");//去除注释
             let className = jj.judgeClass(line);
@@ -174,9 +258,6 @@ module.exports = function(context) {
             }
         });
 
-        let write_method_name = "";
-        let write_class_name = "";
-        let write_dis = "";
         //开始生成数据集
         methodTagNowClasses.forEach(method => {
             let disTagClass = unique(method.disTagClass);
@@ -193,24 +274,23 @@ module.exports = function(context) {
                 classMethods[method.nowClass] = removeByValue(classMethods[method.nowClass], method.methodName);
                 let TCNowCount = sr.calculateTC(methodUsese[method.methodName], classMethods[method.nowClass]);
                 classMethods[method.nowClass].push(method.methodName);
-                let writeline_dis = TCTagCount.toFixed(20) + " " + TCNowCount.toFixed(20);
-                let writeline_class_name = (sr.AdjustStr(tagClass) + " " + sr.AdjustStr(method.nowClass) + " " + tagClassMethodStr).trim();
-                let writeline_method_name = (sr.AdjustStr(method.methodName) + " " + method.methodParameters).trim();
-                write_dis += writeline_dis + "\n";
-                write_class_name += writeline_class_name + "\n";
-                write_method_name += writeline_method_name + "\n";
+                let writeline_dis = TCTagCount.toFixed(20) + " " + TCNowCount.toFixed(20) + '\n';
+                let writeline_class_name = (sr.AdjustStr(tagClass) + " " + sr.AdjustStr(method.nowClass) + " " + tagClassMethodStr).trim() + '\n';
+                let writeline_method_name = (sr.AdjustStr(method.methodName) + " " + method.methodParameters).trim() + '\n';
+                let writeline_res = method.methodName + " " + tagClass + '\n';
+                writefile(methodinfoPath, writeline_method_name);
+                writefile(classinfoPath, writeline_class_name);
+                writefile(disPath, writeline_dis);
+                writefile(resPath, writeline_res);
             });
         });
-        writefile(__dirname + '/../data/methodinfo.txt', write_method_name);
-        writefile(__dirname + '/../data/classinfo.txt', write_class_name);
-        writefile(__dirname + '/../data/dis.txt', write_dis);
         showInfMessage(`特征提取成功`);
     });
     context.subscriptions.push(geturi);
 };
 
 function writefile(path, msg) {
-    fs.writeFile(path, msg, { 'flag': 'a' }, function (error) {
+    fs.writeFile(path, msg,{'flag':'a'}, function (error) {
         if (error) {
           console.log('写入'+path+'失败')
           return false
@@ -235,4 +315,9 @@ function removeByValue(arr, value) {
         arr.splice(index, 1); 
     }
     return arr;
+}
+
+function readfile(path) {
+    var data = fs.readFileSync(path);
+    return data.toString();
 }

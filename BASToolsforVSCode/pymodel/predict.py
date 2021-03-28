@@ -28,6 +28,7 @@ if __name__ == '__main__':
         dis_path = msg[3]
         out_path = msg[4]
         model_path = msg[5]
+        info_path = msg[6]
     except:
         print("参数不足，应为method_path class_path dis_path out_path")
         exit(1)
@@ -115,8 +116,20 @@ if __name__ == '__main__':
                 os.remove(TARGETPATH)
             resultWriter = open(TARGETPATH, 'w')
 
+            f = open(info_path, 'r')
+
+            lines = f.readlines()
+            linenum = 0
+
             for result in test_y_out:
-                resultWriter.write(str(result[1]) + "\n")
+                line = lines[linenum].replace('\n','')
+                re = "NaN"
+                if(result[1] > 0.5):
+                    re = "EXISTS"
+                else:
+                    re = "inexists"
+                resultWriter.write(line + " " + re + "\n")
+                linenum+=1
 
             resultWriter.close()
     exit(0)

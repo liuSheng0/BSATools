@@ -1,0 +1,11 @@
+main myClassTwo
+myMethodOne HelloWorld
+myMethodTwo HelloWorld
+myMethodTwo myClassTwo
+myMethodThree HelloWorld
+myMethodThree myClassTwo
+myMethodOne myClassOne
+myMethodTwo HelloWorld
+myMethodTwo myClassOne
+myMethodThree HelloWorld
+myMethodThree myClassOne
