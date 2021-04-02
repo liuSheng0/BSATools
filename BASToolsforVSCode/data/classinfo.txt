@@ -1,11 +1,275 @@
-* * my class two * * * hello world * * my method one * * my method two * * my method three
-* * * hello world * * my class one * * * * main
-* * * hello world * * my class one * * * * main
-* * my class two * * my class one * * my method one * * my method two * * my method three
-* * * hello world * * my class one * * * * main
-* * my class two * * my class one * * my method one * * my method two * * my method three
-* * my class one * * my class two * * my method one * * my method two * * my method three
-* * * hello world * * my class two * * * * main
-* * my class one * * my class two * * my method one * * my method two * * my method three
-* * * hello world * * my class two * * * * main
-* * my class one * * my class two * * my method one * * my method two * * my method three
+* * chart style panel * * * label value
+* * * editable property * * * label value * * * init editor * * chart style panel * * * change chart * * * repaint chart * * * get properties * * * * compare
+* * * escls arr * * * label value
+* * * * es * * * label value
+* * * 1assignable classes * * * label value
+* * * * cls * * * label value * * * to string * * * set value * * * get value * get table cell editor * * get value class
+* * property editor adapter * * * label value * * property editor adapter * get cell editor value
+* generic editor with class * * * label value * generic editor with class * * stop cell editing * get cell editor value
+* * editor table model * * * label value * * editor table model * * * change chart * * get column class * * get value at * * set value at * * is cell editable * * get row count
+* * * editor table * * * label value * * * editor table * * * change chart * * get cell editor
+* * chart style panel * * * label value
+* * * editable property * * * label value * * * init editor * * chart style panel * * * change chart * * * repaint chart * * * get properties * * * * compare
+* * * escls arr * * * label value
+* * * * es * * * label value
+* * * 1assignable classes * * * label value
+* * * * cls * * * label value * * * to string * * * set value * * * get value * get table cell editor * * get value class
+* * property editor adapter * * * label value * * property editor adapter * get cell editor value
+* generic editor with class * * * label value * generic editor with class * * stop cell editing * get cell editor value
+* * editor table model * * * label value * * editor table model * * * change chart * * get column class * * get value at * * set value at * * is cell editable * * get row count
+* * * editor table * * * label value * * * editor table * * * change chart * * get cell editor
+* * chart style panel * * * editable property
+* * * label value * * * editable property * * * label value * * * to string
+* * * escls arr * * * editable property
+* * * * es * * * editable property
+* * * 1assignable classes * * * editable property
+* * property editor adapter * * * editable property * * property editor adapter * get cell editor value
+* generic editor with class * * * editable property * generic editor with class * * stop cell editing * get cell editor value
+* * editor table model * * * editable property * * editor table model * * * change chart * * get column class * * get value at * * set value at * * is cell editable * * get row count
+* * * editor table * * * editable property * * * editor table * * * change chart * * get cell editor
+* * chart style panel * * * * cls
+* * * label value * * * * cls * * * label value * * * to string
+* * * editable property * * * * cls * * chart style panel * * * change chart * * * repaint chart * * * get properties * * * * compare * * * init editor
+* * * escls arr * * * * cls
+* * * * es * * * * cls
+* * * 1assignable classes * * * * cls
+* * property editor adapter * * * * cls * * property editor adapter * get cell editor value
+* generic editor with class * * * * cls * generic editor with class * * stop cell editing * get cell editor value
+* * editor table model * * * * cls * * editor table model * * * change chart * * get column class * * get value at * * set value at * * is cell editable * * get row count
+* * * editor table * * * * cls * * * editor table * * * change chart * * get cell editor
+* * chart style panel * * * * cls
+* * * editable property * * * * cls * * chart style panel * * * change chart * * * repaint chart * * * get properties * * * * compare * * * init editor
+* * * escls arr * * * * cls
+* * * * es * * * * cls
+* * * 1assignable classes * * * * cls
+* * property editor adapter * * * * cls * * property editor adapter * get cell editor value
+* generic editor with class * * * * cls * generic editor with class * * stop cell editing * get cell editor value
+* * editor table model * * * * cls * * editor table model * * * change chart * * get column class * * get value at * * set value at * * is cell editable * * get row count
+* * * editor table * * * * cls * * * editor table * * * change chart * * get cell editor
+* * chart style panel * * * * cls
+* * * label value * * * * cls * * * label value * * * to string
+* * * editable property * * * * cls * * chart style panel * * * change chart * * * repaint chart * * * get properties * * * * compare * * * init editor
+* * * escls arr * * * * cls
+* * * * es * * * * cls
+* * * 1assignable classes * * * * cls
+* * property editor adapter * * * * cls * * property editor adapter * get cell editor value
+* generic editor with class * * * * cls * generic editor with class * * stop cell editing * get cell editor value
+* * editor table model * * * * cls * * editor table model * * * change chart * * get column class * * get value at * * set value at * * is cell editable * * get row count
+* * * editor table * * * * cls * * * editor table * * * change chart * * get cell editor
+* * chart style panel * * * * cls
+* * * label value * * * * cls * * * label value * * * to string
+* * * editable property * * * * cls * * chart style panel * * * change chart * * * repaint chart * * * get properties * * * * compare * * * init editor
+* * * escls arr * * * * cls
+* * * * es * * * * cls
+* * * 1assignable classes * * * * cls
+* * property editor adapter * * * * cls * * property editor adapter * get cell editor value
+* generic editor with class * * * * cls * generic editor with class * * stop cell editing * get cell editor value
+* * editor table model * * * * cls * * editor table model * * * change chart * * get column class * * get value at * * set value at * * is cell editable * * get row count
+* * * editor table * * * * cls * * * editor table * * * change chart * * get cell editor
+* * chart style panel * * * * cls
+* * * label value * * * * cls * * * label value * * * to string
+* * * editable property * * * * cls * * chart style panel * * * change chart * * * repaint chart * * * get properties * * * * compare * * * init editor
+* * * escls arr * * * * cls
+* * * * es * * * * cls
+* * * 1assignable classes * * * * cls
+* * property editor adapter * * * * cls * * property editor adapter * get cell editor value
+* generic editor with class * * * * cls * generic editor with class * * stop cell editing * get cell editor value
+* * editor table model * * * * cls * * editor table model * * * change chart * * get column class * * get value at * * set value at * * is cell editable * * get row count
+* * * editor table * * * * cls * * * editor table * * * change chart * * get cell editor
+* * chart style panel * * property editor adapter
+* * * label value * * property editor adapter * * * label value * * * to string
+* * * escls arr * * property editor adapter
+* * * * es * * property editor adapter
+* * * 1assignable classes * * property editor adapter
+* * * * cls * * property editor adapter * * * to string * * * set value * * * get value * get table cell editor * * get value class
+* generic editor with class * * property editor adapter * generic editor with class * * stop cell editing * get cell editor value
+* * editor table model * * property editor adapter * * editor table model * * * change chart * * get column class * * get value at * * set value at * * is cell editable * * get row count
+* * * editor table * * property editor adapter * * * editor table * * * change chart * * get cell editor
+* * chart style panel * * property editor adapter
+* * * label value * * property editor adapter * * * label value * * * to string
+* * * editable property * * property editor adapter * * chart style panel * * * change chart * * * repaint chart * * * get properties * * * * compare * * * init editor
+* * * escls arr * * property editor adapter
+* * * * es * * property editor adapter
+* * * 1assignable classes * * property editor adapter
+* * * * cls * * property editor adapter * * * to string * * * set value * * * get value * get table cell editor * * get value class
+* generic editor with class * * property editor adapter * generic editor with class * * stop cell editing * get cell editor value
+* * editor table model * * property editor adapter * * editor table model * * * change chart * * get column class * * get value at * * set value at * * is cell editable * * get row count
+* * * editor table * * property editor adapter * * * editor table * * * change chart * * get cell editor
+* * chart style panel * generic editor with class
+* * * label value * generic editor with class * * * label value * * * to string
+* * * editable property * generic editor with class * * chart style panel * * * change chart * * * repaint chart * * * get properties * * * * compare * * * init editor
+* * * escls arr * generic editor with class
+* * * * es * generic editor with class
+* * * 1assignable classes * generic editor with class
+* * property editor adapter * generic editor with class * * property editor adapter * get cell editor value
+* * editor table model * generic editor with class * * editor table model * * * change chart * * get column class * * get value at * * set value at * * is cell editable * * get row count
+* * * editor table * generic editor with class * * * editor table * * * change chart * * get cell editor
+* * chart style panel * generic editor with class
+* * * label value * generic editor with class * * * label value * * * to string
+* * * editable property * generic editor with class * * chart style panel * * * change chart * * * repaint chart * * * get properties * * * * compare * * * init editor
+* * * escls arr * generic editor with class
+* * * * es * generic editor with class
+* * * 1assignable classes * generic editor with class
+* * * * cls * generic editor with class * * * to string * * * set value * * * get value * get table cell editor * * get value class
+* * property editor adapter * generic editor with class * * property editor adapter * get cell editor value
+* * editor table model * generic editor with class * * editor table model * * * change chart * * get column class * * get value at * * set value at * * is cell editable * * get row count
+* * * editor table * generic editor with class * * * editor table * * * change chart * * get cell editor
+* * chart style panel * generic editor with class
+* * * label value * generic editor with class * * * label value * * * to string
+* * * editable property * generic editor with class * * chart style panel * * * change chart * * * repaint chart * * * get properties * * * * compare * * * init editor
+* * * escls arr * generic editor with class
+* * * * es * generic editor with class
+* * * 1assignable classes * generic editor with class
+* * * * cls * generic editor with class * * * to string * * * set value * * * get value * get table cell editor * * get value class
+* * property editor adapter * generic editor with class * * property editor adapter * get cell editor value
+* * editor table model * generic editor with class * * editor table model * * * change chart * * get column class * * get value at * * set value at * * is cell editable * * get row count
+* * * editor table * generic editor with class * * * editor table * * * change chart * * get cell editor
+* * * label value * * editor table model * * * label value * * * to string
+* * * editable property * * editor table model * * chart style panel * * * change chart * * * repaint chart * * * get properties * * * * compare * * * init editor
+* * * escls arr * * editor table model
+* * * * es * * editor table model
+* * * 1assignable classes * * editor table model
+* * * * cls * * editor table model * * * to string * * * set value * * * get value * get table cell editor * * get value class
+* * property editor adapter * * editor table model * * property editor adapter * get cell editor value
+* generic editor with class * * editor table model * generic editor with class * * stop cell editing * get cell editor value
+* * * editor table * * editor table model * * * editor table * * * change chart * * get cell editor
+* * chart style panel * * editor table model
+* * * label value * * editor table model * * * label value * * * to string
+* * * editable property * * editor table model * * chart style panel * * * change chart * * * repaint chart * * * get properties * * * * compare * * * init editor
+* * * escls arr * * editor table model
+* * * * es * * editor table model
+* * * 1assignable classes * * editor table model
+* * * * cls * * editor table model * * * to string * * * set value * * * get value * get table cell editor * * get value class
+* * property editor adapter * * editor table model * * property editor adapter * get cell editor value
+* generic editor with class * * editor table model * generic editor with class * * stop cell editing * get cell editor value
+* * * editor table * * editor table model * * * editor table * * * change chart * * get cell editor
+* * chart style panel * * editor table model
+* * * label value * * editor table model * * * label value * * * to string
+* * * editable property * * editor table model * * chart style panel * * * change chart * * * repaint chart * * * get properties * * * * compare * * * init editor
+* * * escls arr * * editor table model
+* * * * es * * editor table model
+* * * 1assignable classes * * editor table model
+* * * * cls * * editor table model * * * to string * * * set value * * * get value * get table cell editor * * get value class
+* * property editor adapter * * editor table model * * property editor adapter * get cell editor value
+* generic editor with class * * editor table model * generic editor with class * * stop cell editing * get cell editor value
+* * * editor table * * editor table model * * * editor table * * * change chart * * get cell editor
+* * chart style panel * * editor table model
+* * * label value * * editor table model * * * label value * * * to string
+* * * escls arr * * editor table model
+* * * * es * * editor table model
+* * * 1assignable classes * * editor table model
+* * * * cls * * editor table model * * * to string * * * set value * * * get value * get table cell editor * * get value class
+* * property editor adapter * * editor table model * * property editor adapter * get cell editor value
+* generic editor with class * * editor table model * generic editor with class * * stop cell editing * get cell editor value
+* * * editor table * * editor table model * * * editor table * * * change chart * * get cell editor
+* * chart style panel * * editor table model
+* * * label value * * editor table model * * * label value * * * to string
+* * * escls arr * * editor table model
+* * * * es * * editor table model
+* * * 1assignable classes * * editor table model
+* * * * cls * * editor table model * * * to string * * * set value * * * get value * get table cell editor * * get value class
+* * property editor adapter * * editor table model * * property editor adapter * get cell editor value
+* generic editor with class * * editor table model * generic editor with class * * stop cell editing * get cell editor value
+* * * editor table * * editor table model * * * editor table * * * change chart * * get cell editor
+* * chart style panel * * editor table model
+* * * label value * * editor table model * * * label value * * * to string
+* * * escls arr * * editor table model
+* * * * es * * editor table model
+* * * 1assignable classes * * editor table model
+* * * * cls * * editor table model * * * to string * * * set value * * * get value * get table cell editor * * get value class
+* * property editor adapter * * editor table model * * property editor adapter * get cell editor value
+* generic editor with class * * editor table model * generic editor with class * * stop cell editing * get cell editor value
+* * * editor table * * editor table model * * * editor table * * * change chart * * get cell editor
+* * chart style panel * * editor table model
+* * * label value * * editor table model * * * label value * * * to string
+* * * editable property * * editor table model * * chart style panel * * * change chart * * * repaint chart * * * get properties * * * * compare * * * init editor
+* * * escls arr * * editor table model
+* * * * es * * editor table model
+* * * 1assignable classes * * editor table model
+* * * * cls * * editor table model * * * to string * * * set value * * * get value * get table cell editor * * get value class
+* * property editor adapter * * editor table model * * property editor adapter * get cell editor value
+* generic editor with class * * editor table model * generic editor with class * * stop cell editing * get cell editor value
+* * * editor table * * editor table model * * * editor table * * * change chart * * get cell editor
+* * chart style panel * * editor table model
+* * * label value * * editor table model * * * label value * * * to string
+* * * editable property * * editor table model * * chart style panel * * * change chart * * * repaint chart * * * get properties * * * * compare * * * init editor
+* * * escls arr * * editor table model
+* * * * es * * editor table model
+* * * 1assignable classes * * editor table model
+* * * * cls * * editor table model * * * to string * * * set value * * * get value * get table cell editor * * get value class
+* * property editor adapter * * editor table model * * property editor adapter * get cell editor value
+* generic editor with class * * editor table model * generic editor with class * * stop cell editing * get cell editor value
+* * * editor table * * editor table model * * * editor table * * * change chart * * get cell editor
+* * * label value * * * editor table * * * label value * * * to string
+* * * editable property * * * editor table * * chart style panel * * * change chart * * * repaint chart * * * get properties * * * * compare * * * init editor
+* * * escls arr * * * editor table
+* * * * es * * * editor table
+* * * 1assignable classes * * * editor table
+* * * * cls * * * editor table * * * to string * * * set value * * * get value * get table cell editor * * get value class
+* * property editor adapter * * * editor table * * property editor adapter * get cell editor value
+* generic editor with class * * * editor table * generic editor with class * * stop cell editing * get cell editor value
+* * chart style panel * * * editor table
+* * * label value * * * editor table * * * label value * * * to string
+* * * editable property * * * editor table * * chart style panel * * * change chart * * * repaint chart * * * get properties * * * * compare * * * init editor
+* * * escls arr * * * editor table
+* * * * es * * * editor table
+* * * 1assignable classes * * * editor table
+* * * * cls * * * editor table * * * to string * * * set value * * * get value * get table cell editor * * get value class
+* * property editor adapter * * * editor table * * property editor adapter * get cell editor value
+* generic editor with class * * * editor table * generic editor with class * * stop cell editing * get cell editor value
+* * editor table model * * * editor table * * editor table model * * * change chart * * get column class * * get value at * * set value at * * is cell editable * * get row count
+* * chart style panel * * * editor table
+* * * label value * * * editor table * * * label value * * * to string
+* * * escls arr * * * editor table
+* * * * es * * * editor table
+* * * 1assignable classes * * * editor table
+* * * * cls * * * editor table * * * to string * * * set value * * * get value * get table cell editor * * get value class
+* * property editor adapter * * * editor table * * property editor adapter * get cell editor value
+* generic editor with class * * * editor table * generic editor with class * * stop cell editing * get cell editor value
+* * editor table model * * * editor table * * editor table model * * * change chart * * get column class * * get value at * * set value at * * is cell editable * * get row count
+* * * label value * * * editable property * * * label value * * * to string
+* * * escls arr * * * editable property
+* * * * es * * * editable property
+* * * 1assignable classes * * * editable property
+* * * * cls * * * editable property * * * to string * * * set value * * * get value * get table cell editor * * get value class
+* * property editor adapter * * * editable property * * property editor adapter * get cell editor value
+* generic editor with class * * * editable property * generic editor with class * * stop cell editing * get cell editor value
+* * editor table model * * * editable property * * editor table model * * * change chart * * get column class * * get value at * * set value at * * is cell editable * * get row count
+* * chart style panel * * * editable property
+* * * label value * * * editable property * * * label value * * * to string
+* * * escls arr * * * editable property
+* * * * es * * * editable property
+* * * 1assignable classes * * * editable property
+* * * * cls * * * editable property * * * to string * * * set value * * * get value * get table cell editor * * get value class
+* * property editor adapter * * * editable property * * property editor adapter * get cell editor value
+* generic editor with class * * * editable property * generic editor with class * * stop cell editing * get cell editor value
+* * editor table model * * * editable property * * editor table model * * * change chart * * get column class * * get value at * * set value at * * is cell editable * * get row count
+* * chart style panel * * * editable property
+* * * label value * * * editable property * * * label value * * * to string
+* * * escls arr * * * editable property
+* * * * es * * * editable property
+* * * 1assignable classes * * * editable property
+* * * * cls * * * editable property * * * to string * * * set value * * * get value * get table cell editor * * get value class
+* * property editor adapter * * * editable property * * property editor adapter * get cell editor value
+* generic editor with class * * * editable property * generic editor with class * * stop cell editing * get cell editor value
+* * editor table model * * * editable property * * editor table model * * * change chart * * get column class * * get value at * * set value at * * is cell editable * * get row count
+* * * editor table * * * editable property * * * editor table * * * change chart * * get cell editor
+* * * label value * * * editable property * * * label value * * * to string
+* * * escls arr * * * editable property
+* * * * es * * * editable property
+* * * 1assignable classes * * * editable property
+* * * * cls * * * editable property * * * to string * * * set value * * * get value * get table cell editor * * get value class
+* * property editor adapter * * * editable property * * property editor adapter * get cell editor value
+* generic editor with class * * * editable property * generic editor with class * * stop cell editing * get cell editor value
+* * editor table model * * * editable property * * editor table model * * * change chart * * get column class * * get value at * * set value at * * is cell editable * * get row count
+* * * editor table * * * editable property * * * editor table * * * change chart * * get cell editor
+* * chart style panel * * * editable property
+* * * label value * * * editable property * * * label value * * * to string
+* * * escls arr * * * editable property
+* * * * es * * * editable property
+* * * 1assignable classes * * * editable property
+* * * * cls * * * editable property * * * to string * * * set value * * * get value * get table cell editor * * get value class
+* * property editor adapter * * * editable property * * property editor adapter * get cell editor value
+* generic editor with class * * * editable property * generic editor with class * * stop cell editing * get cell editor value
+* * editor table model * * * editable property * * editor table model * * * change chart * * get column class * * get value at * * set value at * * is cell editable * * get row count
+* * * editor table * * * editable property * * * editor table * * * change chart * * get cell editor

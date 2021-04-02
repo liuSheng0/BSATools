@@ -5,42 +5,43 @@ const jj = require('./dependences/judgeJava');
 
 const fileinfoPath = __dirname + '/../data/fileinfo.txt';
 
-var packagePath = null;
-
 module.exports = function(context) {
-    context.subscriptions.push(vscode.commands.registerCommand('extension.findfile', (uri) => {
-        try { fs.unlinkSync(fileinfoPath) } catch {;}
-        let rootPath = uri.path.replace(/java\/.*/, "");
-        rootPath = rootPath.replace(/\/c:\/|\/C:\//,"C:/");
-        console.log(rootPath);
-        let editor = vscode.window.activeTextEditor;
-        if(!editor) {
-            return;
-        }
-        const text = editor.document.getText();
-        const lines = text.split(/\r?\n/);
-        let packageName = null;
-        lines.forEach(line => {
-            line = line.replace(/\/\/.*/g, "");//去除注释
-            let packageNameJudge = jj.judgePackage(line);
-            if(packageNameJudge) {
-                packageName = packageNameJudge;
-                console.log(packageName);
-            }
-            if(packageName) {
-                let importName = jj.judgeImport(line, packageName);
-                if(importName) {
-                    console.log(importName);
-                    fileDisplay(rootPath, packageName.replace(/\./g,"\\"), function(data) {
-                        let importPath = data + '\\' + importName.replace(/\./g, "\\");
-                        console.log(importPath);
-                        writefile(fileinfoPath, (importPath+'.java\n'));
-                    });
-                }
-            }
-        });
-    }));
+    context.subscriptions.push(vscode.commands.registerCommand('extension.findfile', run));
 };
+
+function run(uri) {
+    try { fs.unlinkSync(fileinfoPath) } catch {;}
+    let rootPath = uri.path.replace(/java\/.*/, "");
+    rootPath = rootPath.replace(/\/c:\/|\/C:\//,"C:/");
+    console.log(rootPath);
+    let editor = vscode.window.activeTextEditor;
+    if(!editor) {
+        return;
+    }
+    const text = editor.document.getText();
+    const lines = text.split(/\r?\n/);
+    let packageName = null;
+    lines.forEach(line => {
+        line = line.replace(/\/\/.*/g, "");//去除注释
+        let packageNameJudge = jj.judgePackage(line);
+        if(packageNameJudge) {
+            packageName = packageNameJudge;
+            console.log(packageName);
+        }
+        if(packageName) {
+            let importName = jj.judgeImport(line, packageName);
+            if(importName) {
+                console.log(importName);
+                fileDisplay(rootPath, packageName.replace(/\./g,"\\"), function(data) {
+                    let importPath = data + '\\' + importName.replace(/\./g, "\\");
+                    console.log(importPath);
+                    writefile(fileinfoPath, (importPath+'.java\n'));
+                });
+            }
+        }
+    });
+    showInfMessage("预处理成功");
+}
 
 function showInfMessage(msg) {
 	vscode.window.showInformationMessage(msg);

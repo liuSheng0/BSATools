@@ -29,6 +29,12 @@ const stringRule = {
     },
 
     calculateTC: function(arr1, arr2){
+        if(arr1 == undefined) {
+            arr1 = [];
+        }
+        if(arr2 == undefined) {
+            arr2 = [];
+        }
         //计算T-C距离
         var res = 1.0;
         // 交集

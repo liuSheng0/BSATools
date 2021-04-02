@@ -1,5 +1,5 @@
 {
-  "name": "BASToolsforVSCode",
+  "name": "bastools-for-vscode",
   "displayName": "BASToolsforVSCode",
   "description": "vscode坏味代码检测工具",
   "version": "0.0.1",
@@ -16,14 +16,14 @@
   "contributes": {
     "configuration": {
       "type": "object",
-      "title": "Code插件demo",
+      "title": "坏味代码检测插件",
       "properties": {
-        "vscodePluginDemo.yourName": {
+        "BASToolsforVSCode.yourName": {
             "type": "string",
             "default": "guest",
             "description": "你的名字"
         },
-        "vscodePluginDemo.showTip": {
+        "BASToolsforVSCode.showTip": {
             "type": "boolean",
             "default": true,
             "description": "启动时显示自定义欢迎页"
@@ -37,31 +37,23 @@
       },
       {
         "command": "extension.test",
-        "title": "特征依恋预测"
+        "title": "模型预测"
       },
       {
         "command": "extension.findfile",
         "title": "预处理"
+      },
+      {
+        "command": "extension.start",
+        "title": "特征依恋检测"
       }
     ],
 
     "keybindings":[
       {
-        "command": "extension.getFeature",
-        "key": "ctrl+f10",
-        "mac": "cmd+f10",
-        "when": "editorTextFocus"
-      },
-      {
-        "command": "extension.test",
+        "command": "extension.start",
         "key": "ctrl+f9",
         "mac": "cmd+f9",
-        "when": "editorTextFocus"
-      },
-      {
-        "command": "extension.findfile",
-        "key": "ctrl+f8",
-        "mac": "cmd+f8",
         "when": "editorTextFocus"
       }
     ],
@@ -70,17 +62,25 @@
       "editor/context": [
         {
           "when" : "editorFocus",
-          "command": "extension.getFeature",
+          "command": "extension.start",
           "group": "navigation@5"
-        },
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
         {
-          "when" : "editorFocus",
-          "command": "extension.test",
-          "group": "navigation@5"
-        },
+          "id": "test",
+          "title": "坏味道检测",
+          "icon": "./images/tool-light.svg"
+        }
+      ]
+    },
+    "views": {
+      "test": [
         {
-          "command": "extension.findfile",
-          "group": "navigation"
+          "id": "tools",
+          "name": "检测入口"
         }
       ]
     }
