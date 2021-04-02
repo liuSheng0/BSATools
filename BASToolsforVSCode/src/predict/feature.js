@@ -1,16 +1,18 @@
 const vscode = require('vscode');
-const jj = require('./dependences/judgeJava');
-const sr = require('./dependences/stringRule');
-const mc = require('./dependences/methodTagNowClassJar');
+const jj = require('../dependences/judgeJava');
+const sr = require('../dependences/stringRule');
+const mc = require('../dependences/methodTagNowClassJar');
 const fs = require('fs');
 const path = require('path');
-const { methodTagNowClass } = require('./dependences/methodTagNowClassJar');
+const { methodTagNowClass } = require('../dependences/methodTagNowClassJar');
 
-const methodinfoPath = __dirname + '/../data/methodinfo.txt';
-const classinfoPath = __dirname + '/../data/classinfo.txt';
-const disPath = __dirname + '/../data/dis.txt';
-const resPath = __dirname + '/../data/info.txt';
-const dirPath = __dirname + '/../data/fileinfo.txt';
+const DIRNAME =  __dirname + '/../../';
+
+const methodinfoPath = DIRNAME + 'data/methodinfo.txt';
+const classinfoPath = DIRNAME + 'data/classinfo.txt';
+const disPath = DIRNAME + 'data/dis.txt';
+const resPath = DIRNAME + 'data/info.txt';
+const dirPath = DIRNAME + 'data/fileinfo.txt';
 
 module.exports = function(context) {
     context.subscriptions.push(vscode.commands.registerCommand('extension.getFeature', run));

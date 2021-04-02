@@ -1,9 +1,10 @@
 const vscode = require('vscode');
 const fs = require('fs');
 const path = require('path');
-const jj = require('./dependences/judgeJava');
+const jj = require('../dependences/judgeJava');
 
-const fileinfoPath = __dirname + '/../data/fileinfo.txt';
+const DIRNAME =  __dirname + '/../../';
+const fileinfoPath = DIRNAME + 'data/fileinfo.txt';
 
 module.exports = function(context) {
     context.subscriptions.push(vscode.commands.registerCommand('extension.findfile', run));
