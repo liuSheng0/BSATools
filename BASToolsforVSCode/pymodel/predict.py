@@ -9,8 +9,8 @@ import tensorflow as tf
 #from kegra.utils import *
 import numpy as np
 
-SCRIPT = "<script>const testMode = false;const vscode = testMode ? {} : acquireVsCodeApi();const callbacks = {};function openFileInVscode(path) {vscode.postMessage({command: 'openFileInVscode',text: path})}</script>"
-JUMP = 'href="javascript:;" onclick="openFileInVscode(\'{}\')"'
+SCRIPT = "<script>const testMode = false;const vscode = testMode ? {} : acquireVsCodeApi();const callbacks = {};function openFileInVscode(path,words) {vscode.postMessage({command: 'openFileInVscode',text: path,words: words})}</script>"
+JUMP = 'href="javascript:;" onclick="openFileInVscode(\'{}\',\'{}\')"'
 
 def putTxtInfo(test_y_out, out_path, info_path) :
     # test_y_out为数组（为0 的概率，为1的概率）
@@ -75,12 +75,12 @@ def putTxtInfo(test_y_out, out_path, info_path) :
                     restr = "可能存在特征依恋！"
                 else :
                     restr = "不存在特征依恋"
-                resultWriter.write("<tr><td>{}</td><td {}>{}</td><td>{}</td>".format(methodName, JUMP.format(classPathInfo[nowClassName]), nowClassName, restr))
+                resultWriter.write("<tr><td {}>{}</td><td {}>{}</td><td>{}</td>".format(JUMP.format(classPathInfo[nowClassName], methodName) ,methodName, JUMP.format(classPathInfo[nowClassName], nowClassName), nowClassName, restr))
 
                 if(tagClassesRes["res"] == 0) :
                     resultWriter.write("<td>将该方法移动到以下类中：<br>")
                     for modifyClass in modifyClasses:
-                        resultWriter.write("<a {}>{}<br></a>".format(JUMP.format(classPathInfo[nowClassName]), modifyClass))
+                        resultWriter.write("<a {}>{}<br></a>".format(JUMP.format(classPathInfo[nowClassName], nowClassName), modifyClass))
                     resultWriter.write("</td>")
                 resultWriter.write("</tr>")
             tagClassesRes = {"tagClasses" : [], "predictRes" : [], "res" : re, "nowMethod": methodName}
@@ -96,7 +96,7 @@ def putTxtInfo(test_y_out, out_path, info_path) :
             restr = "可能存在特征依恋！"
         else :
             restr = "不存在特征依恋"
-        resultWriter.write("<tr><td>{}</td><td {}>{}</td><td>{}</td>".format(methodName, JUMP.format(classPathInfo[nowClassName]), nowClassName, restr))
+        resultWriter.write("<tr><td {}>{}</td><td {}>{}</td><td>{}</td>".format(JUMP.format(classPathInfo[nowClassName], methodName) ,methodName, JUMP.format(classPathInfo[nowClassName], nowClassName), nowClassName, restr))
 
         if(tagClassesRes["res"] == 0) :
             resultWriter.write("<td>将该方法移动到以下类中：")

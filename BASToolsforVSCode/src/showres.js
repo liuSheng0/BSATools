@@ -3,6 +3,7 @@ const path = require('path');
 const webfunc = require('./dependences/webviewFunc');
 const fs = require('fs');
 const util = require('./dependences/util');
+const jj = require('./dependences/judgeJava');
 
 const DIRNAME =  __dirname + '/../';
 const out_path = DIRNAME + 'res/predictresult.txt';
@@ -33,7 +34,13 @@ module.exports = function(context) {
         panel.webview.onDidReceiveMessage(message => {
             switch (message.command) {
                 case 'openFileInVscode' :
-                    vscode.window.showTextDocument(vscode.Uri.file(message.text), options);
+                    vscode.window.showTextDocument(vscode.Uri.file(message.text), options).then(editor => {
+                        let decorationType = vscode.window.createTextEditorDecorationType({
+                            backgroundColor: "#FF000055"
+                        })
+                        let pos = getPosition(editor, message.words);
+                        editor.setDecorations(decorationType, pos);
+                    });
 					break;
                 default:
 
@@ -56,4 +63,24 @@ function getWebViewContent(templatePath) {
     });
     html = html.replace('%3A',':');
     return html;
+}
+
+
+//获取高亮位置
+function getPosition(editor, word) {
+    if(!editor) {
+        return;
+    }
+    let range = [];
+    const text = editor.document.getText();
+    const lines = text.split(/\r?\n/);
+    let lineflag = 0; 
+    lines.forEach(line => {
+        let index = line.indexOf(word);
+        if(index != -1 && jj.judgeClass(line)) {
+            range.push(new vscode.Range(lineflag, 0, lineflag, line.length));
+        }
+        lineflag += 1;
+    });
+    return range;
 }

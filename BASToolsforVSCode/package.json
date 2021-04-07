@@ -27,7 +27,12 @@
             "type": "boolean",
             "default": true,
             "description": "启动时显示自定义欢迎页"
-        }
+        },
+        "BASToolsforVSCode.markColor": {
+          "type": "string",
+          "default": "#FF000055",
+          "description": "标记颜色"
+      }
       }
     },
     "commands": [

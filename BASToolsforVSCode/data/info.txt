@@ -1,3 +1,9 @@
-main Person Test /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case7/interfaceTest.java /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case7/interfaceTest.java
-talk Test Student /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case7/interfaceTest.java /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case7/interfaceTest.java
-talk Person Student /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case7/interfaceTest.java /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case7/interfaceTest.java
+main Animal  /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case2/extendsTest.java /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case2/extendsTest.java
+voice Animal Cat /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case2/extendsTest.java /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case2/extendsTest.java
+voice Dog Cat /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case2/extendsTest.java /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case2/extendsTest.java
+eat Animal Cat /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case2/extendsTest.java /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case2/extendsTest.java
+eat Dog Cat /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case2/extendsTest.java /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case2/extendsTest.java
+voice Animal Dog /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case2/extendsTest.java /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case2/extendsTest.java
+voice Cat Dog /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case2/extendsTest.java /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case2/extendsTest.java
+eat Animal Dog /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case2/extendsTest.java /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case2/extendsTest.java
+eat Cat Dog /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case2/extendsTest.java /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case2/extendsTest.java

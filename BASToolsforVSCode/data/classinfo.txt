@@ -1,3 +1,9 @@
-* * * * person * * * * test
-* * * * test * * * * student * * * * main
-* * * * person * * * * student
+* * * * animal * * * *
+* * * * animal * * * * cat
+* * * * dog * * * * cat * * * * voice * * * * eat
+* * * * animal * * * * cat
+* * * * dog * * * * cat * * * * voice * * * * eat
+* * * * animal * * * * dog
+* * * * cat * * * * dog * * * * voice * * * * eat
+* * * * animal * * * * dog
+* * * * cat * * * * dog * * * * voice * * * * eat
