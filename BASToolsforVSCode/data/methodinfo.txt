@@ -1,9 +1,349 @@
-* * * * main args[]
-* * * * voice
-* * * * voice
-* * * * eat
-* * * * eat
-* * * * voice
-* * * * voice
-* * * * eat
-* * * * eat
+* * * * classID
+* * * * classID
+* * * * classID
+* * * * classID
+* * * * classID
+* * * * classID
+* * * * classID
+* * * * classID
+* * * * classID
+* * * * classID
+* * * * equals obj
+* * * * equals obj
+* * * * equals obj
+* * * * equals obj
+* * * * equals obj
+* * * * equals obj
+* * * * equals obj
+* * * * equals obj
+* * * * equals obj
+* * * * equals obj
+* * * * ClassAtributes
+* * * * ClassAtributes
+* * * * ClassAtributes
+* * * * ClassAtributes
+* * * * ClassAtributes
+* * * * ClassAtributes
+* * * * ClassAtributes
+* * * * ClassAtributes
+* * * * ClassAtributes
+* * * * ClassAtributes
+* * * * other.classID
+* * * * other.classID
+* * * * other.classID
+* * * * other.classID
+* * * * other.classID
+* * * * other.classID
+* * * * other.classID
+* * * * calculate strategy
+* * * * calculate strategy
+* * * * calculate strategy
+* * * * calculate strategy
+* * * * calculate strategy
+* * * * calculate strategy
+* * * * calculate strategy
+* * * * calculate strategy
+* * * * calculate strategy
+* * * * methods
+* * * * methods
+* * * * methods
+* * * * methods
+* * * * methods
+* * * * methods
+* * * * methods
+all methods.get number of excluded
+all methods.get number of excluded
+all methods.get number of excluded
+all methods.get number of excluded
+all methods.get number of excluded
+all methods.get number of excluded
+all methods.get number of excluded
+all methods.get number of excluded
+all methods.get number of excluded
+all methods.get number of excluded
+all methods.get number of excluded
+all methods.get number of excluded
+all methods.get number of excluded
+all methods.get number of excluded
+* * * * !im.isConstructor
+* * * * !im.isConstructor
+* * * * !im.isConstructor
+* * * * !im.isConstructor
+* * * * !im.isConstructor
+* * * * !im.isConstructor
+* * * * !im.isConstructor
+* * * * !im.isConstructor
+* * * * !im.isConstructor
+* * * * !im.isConstructor
+* * * im.is resolved
+* * * im.is resolved
+* * * im.is resolved
+* * * im.is resolved
+* * * im.is resolved
+* * * im.is resolved
+* * * im.is resolved
+* * * im.is resolved
+* * * im.is resolved
+* * * im.is resolved
+* * * * catch e
+* * * * catch e
+* * * * catch e
+* * * * catch e
+* * * * catch e
+* * * * catch e
+* * * * catch e
+* * * * catch e
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * * j
+* * * * j
+* * * * j
+* * * * j
+* * * * j
+* * * * j
+* * * * j
+* * * * j
+* * * * j
+* * * * j
+* * * target method
+* * * target method
+* * * target method
+* * * target method
+* * * target method
+* * * target method
+* * * target method
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * * allClassSimilarity
+* * * * allClassSimilarity
+* * * * allClassSimilarity
+* * * * allClassSimilarity
+* * * * allClassSimilarity
+* * * * allClassSimilarity
+* * * * allClassSimilarity
+* * * * allClassSimilarity
+* * * * allClassSimilarity
+* * * * Comparator<Object>
+* * * * Comparator<Object>
+* * * * Comparator<Object>
+* * * * Comparator<Object>
+* * * * Comparator<Object>
+* * * * Comparator<Object>
+* * * * Comparator<Object>
+* * * * Comparator<Object>
+* * * * Comparator<Object>
+* * * * Comparator<Object>
+* * * * compare o1 o2
+* * * * compare o1 o2
+* * * * compare o1 o2
+* * * * compare o1 o2
+* * * * compare o1 o2
+* * * * compare o1 o2
+* * * * compare o1 o2
+* * * * compare o1 o2
+* * * * compare o1 o2
+* * * * monitor.isCanceled
+* * * * monitor.isCanceled
+* * * * monitor.isCanceled
+* * * * monitor.isCanceled
+* * * * monitor.isCanceled
+* * * * monitor.isCanceled
+* * * * monitor.isCanceled
+* * * * monitor.isCanceled
+* * * * monitor.isCanceled
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * * candidates
+* * * * candidates
+* * * * candidates
+* * * * candidates
+* * * * candidates
+* * * * candidates
+* * * * candidates
+* * * * candidates
+* * * * normalize allClassSimilarity
+* * * * normalize allClassSimilarity
+* * * * normalize allClassSimilarity
+* * * * normalize allClassSimilarity
+* * * * normalize allClassSimilarity
+* * * * normalize allClassSimilarity
+* * * * normalize allClassSimilarity
+* * * * normalize allClassSimilarity
+* * * * normalize allClassSimilarity
+* * * * normalize allClassSimilarity
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * * else
+* * * * else
+* * * * else
+* * * * else
+* * * * else
+* * * * else
+* * * * else
+* * * * else
+* * * * else
+* * * * else
+* * write excel format contador strategy
+* * write excel format contador strategy
+* * write excel format contador strategy
+* * write excel format contador strategy
+* * write excel format contador strategy
+* * write excel format contador strategy
+* * write excel format contador strategy
+* * write excel format contador strategy
+* * write excel format contador strategy
+* * write statistics blind contador
+* * write statistics blind contador
+* * write statistics blind contador
+* * write statistics blind contador
+* * write statistics blind contador
+* * write statistics blind contador
+* * write statistics blind contador
+* * write statistics blind contador
+* * write statistics blind contador
+* * write statistics blind contador
+* * * * 0
+* * * * 0
+* * * * 0
+* * * * 0
+* * * * 0
+* * * * 0
+* * * * 0
+* * * * 0
+* * * * 0
+* * * * int
+* * * * int
+* * * * int
+* * * * int
+* * * * int
+* * * * int
+* * * * POSICAOMAXIMA
+* * * * POSICAOMAXIMA
+* * * * POSICAOMAXIMA
+* * * * POSICAOMAXIMA
+* * * * POSICAOMAXIMA
+* * * * POSICAOMAXIMA
+* * * * POSICAOMAXIMA
+* * * * POSICAOMAXIMA
+* * * * POSICAOMAXIMA
+* * * * candidate
+* * * * candidate
+* * * * candidate
+* * * * candidate
+* * * * candidate
+* * * * candidate
+* * * * candidate
+* * * * VALORALTO
+* * * * VALORALTO
+* * * * VALORALTO
+* * * * VALORALTO
+* * * * VALORALTO
+* * * * VALORALTO
+* * * * VALORALTO
+* * * * VALORALTO
+* * * * VALORALTO
+* * * * VALORALTO
+* * * * candidate
+* * * * candidate
+* * * * candidate
+* * * * candidate
+* * * * candidate
+* * * * candidate
+* * * * candidate
+* * * * method
+* * * * method
+* * * * method
+* * * * method
+* * * * method
+* * * * method
+* * * * method
+* * * * method
+* * * * method
+* * * * classe
+* * * * classe
+* * * * classe
+* * * * classe
+* * * * classe
+* * * * classe
+* * * * classe
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * * allClassSimilarity
+* * * * allClassSimilarity
+* * * * allClassSimilarity
+* * * * allClassSimilarity
+* * * * allClassSimilarity
+* * * * allClassSimilarity
+* * * * allClassSimilarity
+* * * * allClassSimilarity
+* .get by i d(
+* .get by i d(
+* .get by i d(
+* .get by i d(
+* .get by i d(
+* .get by i d(
+* .get by i d(
+* .get by i d(
+* calculate for all strategies
+* calculate for all strategies
+* calculate for all strategies
+* calculate for all strategies
+* calculate for all strategies
+* calculate for all strategies
+* calculate for all strategies
+* calculate for all strategies
+* calculate for all strategies
+* * * * )
+* * * * )
+* * * * )
+* * * * )
+* * * * )
+* * * * )
+* * * * )
+* * * * )
+* * * * )

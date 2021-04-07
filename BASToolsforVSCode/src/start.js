@@ -6,9 +6,6 @@ module.exports = function(context) {
 };
 
 function run(uri) {
-    vscode.commands.executeCommand('extension.findfile', uri).then(result => {
-        console.log('命令结果', result);
-    });
     vscode.commands.executeCommand('extension.getFeature', uri).then(result => {
         console.log('命令结果', result);
     });

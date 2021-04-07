@@ -14,23 +14,29 @@ const disPath = DIRNAME + 'data/dis.txt';
 const resPath = DIRNAME + 'data/info.txt';
 const dirPath = DIRNAME + 'data/fileinfo.txt';
 
+var predealfiledirs = [];
+
 module.exports = function(context) {
     context.subscriptions.push(vscode.commands.registerCommand('extension.getFeature', run));
 };
 
 function run(uri) {
+    predeal(uri);
+
     let classList = [];//列表用于存储全部类
     let methodList = [];//列表用于存储全部方法
     let classMethods = new Array();//字典用于存储类的全部方法
     let propertyClass = new Array();//字典用于存储在类内方法外创建的类的实例
     let methodUsese = new Array();//字典用于存储使用方法的全部实例
     let methodTagNowClasses = [];//用于存储方法的目标类和自身类
-    let classUri = new Array();
+    let classUri = new Array();//用于存储类的地址
 
     try { fs.unlinkSync(methodinfoPath) } catch {;}
     try { fs.unlinkSync(classinfoPath) } catch {;}
     try { fs.unlinkSync(disPath) } catch {;}
     try { fs.unlinkSync(resPath) } catch {;}
+
+
 
 
 
@@ -40,79 +46,77 @@ function run(uri) {
     let flagClassMethod = 0;//当前状态，0为类，1为方法
     let methodCount = 0;
     braceStack.push(nowClassOrMethod);
-    if(fs.existsSync(dirPath)){
-        let filedirs = readfile(dirPath).toString().split(/\r?\n/);
-        filedirs.forEach(filedir => {
-            console.log(filedir);
-            if(fs.existsSync(filedir)){
-                let everfilelines = readfile(filedir).toString().split(/\r?\n/);
-                braceStack = [];//括号匹配栈
-                nowClassOrMethod = "*";//当前类或者方法
-                nowClassMethod = ["*", "*"];//当前类，方法
-                flagClassMethod = 0;//当前状态，0为类，1为方法
-                methodCount = 0;
-                everfilelines.forEach((line) => {
-                    line = line.replace(/\/\/.*/g, "");//去除注释
-                    let className = jj.judgeClass(line);
-                    if(className != null) {
-                        classList.push(className);
-                        if(!classMethods.hasOwnProperty(className)) {
-                            classMethods[className] = [];
-                        }
-                        if(!classUri.hasOwnProperty(className)) {
-                            classUri[className] = filedir;
-                        }
-                        flagClassMethod = 0;
-                        nowClassOrMethod = className;
-                        nowClassMethod[flagClassMethod] = className;
-                        console.log(sr.ConvertTF(className));
+    predealfiledirs.forEach(filedir => {
+        console.log(filedir);
+        if(fs.existsSync(filedir)){
+            let everfilelines = readfile(filedir).toString().split(/\r?\n/);
+            braceStack = [];//括号匹配栈
+            nowClassOrMethod = "*";//当前类或者方法
+            nowClassMethod = ["*", "*"];//当前类，方法
+            flagClassMethod = 0;//当前状态，0为类，1为方法
+            methodCount = 0;
+            everfilelines.forEach((line) => {
+                line = line.replace(/\/\/.*/g, "");//去除注释
+                let className = jj.judgeClass(line);
+                if(className != null) {
+                    classList.push(className);
+                    if(!classMethods.hasOwnProperty(className)) {
+                        classMethods[className] = [];
                     }
-                    else {
-                        let method = jj.judgeMethod(line);
-                        if (method[0] != null) {
-                            let nowClass = nowClassMethod[0];
-                            let methodName = method[0];
-                            let methodParameter = method[1];
-                            methodList.push(methodName);
-                            if (classList.indexOf(nowClass) != -1 && classMethods[nowClass].indexOf(methodName) == -1) {
-                                classMethods[nowClass].push(methodName);
+                    if(!classUri.hasOwnProperty(className)) {
+                        classUri[className] = filedir;
+                    }
+                    flagClassMethod = 0;
+                    nowClassOrMethod = className;
+                    nowClassMethod[flagClassMethod] = className;
+                    console.log(sr.ConvertTF(className));
+                }
+                else {
+                    let method = jj.judgeMethod(line);
+                    if (method[0] != null) {
+                        let nowClass = nowClassMethod[0];
+                        let methodName = method[0];
+                        let methodParameter = method[1];
+                        methodList.push(methodName);
+                        if (classList.indexOf(nowClass) != -1 && classMethods[nowClass].indexOf(methodName) == -1) {
+                            classMethods[nowClass].push(methodName);
+                        }
+                        methodCount++;
+                        flagClassMethod = 1;
+                        nowClassOrMethod = method[0];
+                        nowClassMethod[flagClassMethod] = method[0];
+                        console.log(sr.AdjustStr(methodName) + " " + methodParameter + " " + sr.AdjustStr(nowClass));
+                    }
+                }
+
+                //括号匹配
+                for(let i = 0; i < line.length; i++) {
+                    let c = line.charAt(i);
+                    if(c == '{') {
+                        braceStack.push(nowClassOrMethod);
+                    }
+                    else if(c == '}') {
+                        if (braceStack[braceStack.length - 1] == nowClassOrMethod) {
+                            braceStack.pop();
+                            nowClassOrMethod = braceStack[braceStack.length - 1];
+                            if (classList.indexOf(nowClassOrMethod) != -1) {
+                                flagClassMethod = 0;
                             }
-                            methodCount++;
-                            flagClassMethod = 1;
-                            nowClassOrMethod = method[0];
-                            nowClassMethod[flagClassMethod] = method[0];
-                            console.log(sr.AdjustStr(methodName) + " " + methodParameter + " " + sr.AdjustStr(nowClass));
-                        }
-                    }
-
-                    //括号匹配
-                    for(let i = 0; i < line.length; i++) {
-                        let c = line.charAt(i);
-                        if(c == '{') {
-                            braceStack.push(nowClassOrMethod);
-                        }
-                        else if(c == '}') {
-                            if (braceStack[braceStack.length - 1] == nowClassOrMethod) {
-                                braceStack.pop();
-                                nowClassOrMethod = braceStack[braceStack.length - 1];
-                                if (classList.indexOf(nowClassOrMethod) != -1) {
-                                    flagClassMethod = 0;
-                                }
-                                else {
-                                    flagClassMethod = 1;
-                                }
-                                nowClassMethod[flagClassMethod] = nowClassOrMethod;
+                            else {
+                                flagClassMethod = 1;
                             }
+                            nowClassMethod[flagClassMethod] = nowClassOrMethod;
                         }
                     }
-                });
-            }
-        });
-    }
+                }
+            });
+        }
+    });
 
 
 
 
+    console.log(classUri);
     console.log("----------------------");
     let editor = vscode.window.activeTextEditor;
     if(!editor) {
@@ -334,4 +338,32 @@ function removeByValue(arr, value) {
 function readfile(path) {
     var data = fs.readFileSync(path);
     return data.toString();
+}
+
+function predeal(uri) {
+    let rootPath = uri.path.replace(/src\/.*/, "");
+    rootPath = rootPath.replace(/\/c:\/|\/C:\//,"C:/") + "src/";
+    console.log(rootPath);
+    let editor = vscode.window.activeTextEditor;
+    if(!editor) {
+        return;
+    }
+    const text = editor.document.getText();
+    const lines = text.split(/\r?\n/);
+    let packageName = null;
+    lines.forEach(line => {
+        line = line.replace(/\/\/.*/g, "");//去除注释
+        let packageNameJudge = jj.judgePackage(line);
+        if(packageNameJudge) {
+            packageName = packageNameJudge;
+            console.log(packageName);
+        }
+        if(packageName) {
+            let importName = jj.judgeImport(line, packageName);
+            if(importName) {
+                predealfiledirs.push(rootPath + importName.replace(/\./g,"/") +'.java');
+            }
+        }
+    });
+    showInfMessage("预处理成功");
 }

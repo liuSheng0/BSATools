@@ -20,7 +20,7 @@ def putTxtInfo(test_y_out, out_path, info_path) :
         os.remove(TARGETPATH)
     resultWriter = open(TARGETPATH, 'w', encoding = "utf-8")
 
-    resultWriter.write('<html><body><table><tr><th>方法名</th><th>自身类名</th><th>检测结果</th><th>修改意见</th></tr>')
+    resultWriter.write('<html><body><table><tr><th>方法名</th><th>自身类名</th><th>检测结果</th><th>重构推荐</th></tr>')
 
     f = open(info_path, 'r')
 
@@ -54,15 +54,21 @@ def putTxtInfo(test_y_out, out_path, info_path) :
         except:
             nowClassName = "NaN"
         try:
-            tagClassPath = lineName[3][1:]
+            tagClassPath = lineName[3]
         except:
             tagClassPath = "NaN"
         try:
-            nowClassPath = lineName[4][1:]
+            nowClassPath = lineName[4]
         except:
             nowClassPath = "NaN"
-        classPathInfo[nowClassName] = nowClassPath
-        classPathInfo[tagClassName] = tagClassPath
+        if(nowClassName[0] == '/'):
+            classPathInfo[nowClassName] = nowClassPath[1:]
+        else:
+            classPathInfo[nowClassName] = nowClassPath
+        if(tagClassName[0] == '/'):
+            classPathInfo[tagClassName] = tagClassPath[1:]
+        else:
+            classPathInfo[tagClassName] = tagClassPath
         if (methodName == tagClassesRes['nowMethod']) :
             tagClassesRes["tagClasses"].append(tagClassName)
             tagClassesRes["predictRes"].append(result[1])
@@ -78,9 +84,9 @@ def putTxtInfo(test_y_out, out_path, info_path) :
                 resultWriter.write("<tr><td {}>{}</td><td {}>{}</td><td>{}</td>".format(JUMP.format(classPathInfo[nowClassName], methodName) ,methodName, JUMP.format(classPathInfo[nowClassName], nowClassName), nowClassName, restr))
 
                 if(tagClassesRes["res"] == 0) :
-                    resultWriter.write("<td>将该方法移动到以下类中：<br>")
+                    resultWriter.write("<td>建议尝试将该方法移动到以下类中：<br>")
                     for modifyClass in modifyClasses:
-                        resultWriter.write("<a {}>{}<br></a>".format(JUMP.format(classPathInfo[nowClassName], nowClassName), modifyClass))
+                        resultWriter.write("<a {}>{}<br></a>".format(JUMP.format(classPathInfo[modifyClass], modifyClass), modifyClass))
                     resultWriter.write("</td>")
                 resultWriter.write("</tr>")
             tagClassesRes = {"tagClasses" : [], "predictRes" : [], "res" : re, "nowMethod": methodName}

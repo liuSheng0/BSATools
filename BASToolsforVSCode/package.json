@@ -45,10 +45,6 @@
         "title": "模型预测"
       },
       {
-        "command": "extension.findfile",
-        "title": "预处理"
-      },
-      {
         "command": "extension.start",
         "title": "特征依恋检测"
       },
