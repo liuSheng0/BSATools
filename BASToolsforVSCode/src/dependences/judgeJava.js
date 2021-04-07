@@ -3,7 +3,7 @@ const judgeJava = {
     //判断此行是否为类，如果是，返回类名；如果不是，返回null
     judgeClass: function(str) {
         var className = null;
-        var rgclass = new RegExp(/([^/]*\s)(class|interface)\s*/);
+        var rgclass = new RegExp(/(([^/]*\s)|^)(class|interface)\s*/);
         if(rgclass.test(str)) {
             className = str.replace(rgclass, "");
             className = className.replace(/\s*extends.*/, "");
@@ -17,10 +17,10 @@ const judgeJava = {
 
     //判断此行是否为方法，如果是，返回method；如果不是，返回method[0] = null
     judgeMethod: function(str) {
-        const modifierwords = ["private", "public", "protected", "static", "final"];
+        const modifierwords = ["private", "public", "protected", "static", "final", "abstract", "native", "strictfp", "synchronized", "volatile", "transient"];
         var method = [null, "", ""];//返回值method[0]为方法名，method[1]为方法参数名, method[2]为参数类名，以空格隔开
         var rg = new RegExp(/\(.*?\)/);
-        var strName = str.replace(rg, "");
+        var strName = str.replace(rg, " ");
         var strsParameter = rg.exec(str);
         var strParameter = "";
         if (strsParameter != null) {
@@ -28,9 +28,6 @@ const judgeJava = {
         }
         var strSplit = strName.trim().replace(/\,\s/, "").split(' ');
         let i = 0;
-        while (i < strSplit.length && modifierwords.indexOf(strSplit[i]) == -1) {
-            i++;
-        }
         while (i < strSplit.length && modifierwords.indexOf(strSplit[i]) != -1) {
             i++;
         }
@@ -57,13 +54,10 @@ const judgeJava = {
     },
 
     judgeProperty: function(str) {
-        const modifierwords = ["private", "public", "protected", "static", "final"];
+        const modifierwords = ["private", "public", "protected", "static", "final", "abstract", "native", "strictfp", "synchronized", "volatile", "transient"];
         var property = [ null, "" ];//property[0]为属性名，property[1]为属性类
         var strSplit = str.trim().split(' ');
         let i = 0;
-        while (i < strSplit.length && modifierwords.indexOf(strSplit[i]) == -1) {
-            i++;
-        }
         while (i < strSplit.length && modifierwords.indexOf(strSplit[i]) != -1) {
             i++;
         }

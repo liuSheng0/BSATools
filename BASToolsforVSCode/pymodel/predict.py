@@ -9,6 +9,104 @@ import tensorflow as tf
 #from kegra.utils import *
 import numpy as np
 
+SCRIPT = "<script>const testMode = false;const vscode = testMode ? {} : acquireVsCodeApi();const callbacks = {};function openFileInVscode(path) {vscode.postMessage({command: 'openFileInVscode',text: path})}</script>"
+JUMP = 'href="javascript:;" onclick="openFileInVscode(\'{}\')"'
+
+def putTxtInfo(test_y_out, out_path, info_path) :
+    # test_y_out为数组（为0 的概率，为1的概率）
+    TARGETPATH = out_path
+
+    if (os.path.exists(TARGETPATH)):
+        os.remove(TARGETPATH)
+    resultWriter = open(TARGETPATH, 'w', encoding = "utf-8")
+
+    resultWriter.write('<html><body><table><tr><th>方法名</th><th>自身类名</th><th>检测结果</th><th>修改意见</th></tr>')
+
+    f = open(info_path, 'r')
+
+    lines = f.readlines()
+    linenum = 0
+
+    tagClassesRes = {"tagClasses" : [], "predictRes" : [], "res" : 1 , "nowMethod": ""}
+    aflag = False
+    modifyClasses = []
+    classPathInfo = {}
+
+
+    for result in test_y_out:
+        line = lines[linenum].replace('\n','')
+        re = 1
+        if(result[1] > 0.5):
+            re = 0
+        else:
+            re = 1
+        lineName = line.split(" ")
+        try:
+            methodName = lineName[0]
+        except:
+            methodName = "NaN"
+        try:
+            tagClassName = lineName[1]
+        except:
+            tagClassName = "NaN"
+        try:
+            nowClassName = lineName[2]
+        except:
+            nowClassName = "NaN"
+        try:
+            tagClassPath = lineName[3][1:]
+        except:
+            tagClassPath = "NaN"
+        try:
+            nowClassPath = lineName[4][1:]
+        except:
+            nowClassPath = "NaN"
+        classPathInfo[nowClassName] = nowClassPath
+        classPathInfo[tagClassName] = tagClassPath
+        if (methodName == tagClassesRes['nowMethod']) :
+            tagClassesRes["tagClasses"].append(tagClassName)
+            tagClassesRes["predictRes"].append(result[1])
+            tagClassesRes["res"] *= re
+            if(re == 0):
+                modifyClasses.append(tagClassName)
+        else:
+            if aflag:
+                if tagClassesRes["res"] == 0 :
+                    restr = "可能存在特征依恋！"
+                else :
+                    restr = "不存在特征依恋"
+                resultWriter.write("<tr><td>{}</td><td {}>{}</td><td>{}</td>".format(methodName, JUMP.format(classPathInfo[nowClassName]), nowClassName, restr))
+
+                if(tagClassesRes["res"] == 0) :
+                    resultWriter.write("<td>将该方法移动到以下类中：<br>")
+                    for modifyClass in modifyClasses:
+                        resultWriter.write("<a {}>{}<br></a>".format(JUMP.format(classPathInfo[nowClassName]), modifyClass))
+                    resultWriter.write("</td>")
+                resultWriter.write("</tr>")
+            tagClassesRes = {"tagClasses" : [], "predictRes" : [], "res" : re, "nowMethod": methodName}
+            tagClassesRes["tagClasses"].append(tagClassName)
+            tagClassesRes["predictRes"].append(result[1])
+            modifyClasses = []
+            if(re == 0):
+                modifyClasses.append(tagClassName)
+            aflag = True
+        linenum+=1
+    if tagClassesRes["nowMethod"] != "" and not aflag:
+        if tagClassesRes["res"] == 0 :
+            restr = "可能存在特征依恋！"
+        else :
+            restr = "不存在特征依恋"
+        resultWriter.write("<tr><td>{}</td><td {}>{}</td><td>{}</td>".format(methodName, JUMP.format(classPathInfo[nowClassName]), nowClassName, restr))
+
+        if(tagClassesRes["res"] == 0) :
+            resultWriter.write("<td>将该方法移动到以下类中：")
+            for modifyClass in modifyClasses:
+                resultWriter.write(modifyClass + " ")
+            resultWriter.write("</td>")
+        resultWriter.write("</tr>")
+    resultWriter.write("</table>{}</body></html>".format(SCRIPT))
+    resultWriter.close()
+
 if __name__ == '__main__':
 
     # 利用测试集测试模型效果
@@ -109,27 +207,6 @@ if __name__ == '__main__':
             # print("test_y_out:{}".format(test_y_out)
             print(test_y_out)
 
-            # test_y_out为数组（为0 的概率，为1的概率）
-            TARGETPATH = out_path
+            putTxtInfo(test_y_out, out_path, info_path)
 
-            if (os.path.exists(TARGETPATH)):
-                os.remove(TARGETPATH)
-            resultWriter = open(TARGETPATH, 'w')
-
-            f = open(info_path, 'r')
-
-            lines = f.readlines()
-            linenum = 0
-
-            for result in test_y_out:
-                line = lines[linenum].replace('\n','')
-                re = "NaN"
-                if(result[1] > 0.5):
-                    re = "EXISTS"
-                else:
-                    re = "inexists"
-                resultWriter.write(line + " " + re + "\n")
-                linenum+=1
-
-            resultWriter.close()
     exit(0)

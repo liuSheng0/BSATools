@@ -1,25 +1,3 @@
-onCreate MyViewHolder
-initAnimator MyViewHolder
-oneClick MyViewHolder
-doubleClick MyViewHolder
-initFilm MyViewHolder
-initButtonSelect MyViewHolder
-initRecyclerView MyViewHolder
-onBindViewHolder MyViewHolder
-getItemCount MyViewHolder
-onItemClick MyViewHolder
-onItemLongClick MyViewHolder
-myMethodTwo MainActivity
-chooseImage MyViewHolder
-chooseVideo MyViewHolder
-onActivityResult MyViewHolder
-getMultipartFromUri MyViewHolder
-postVideo MyViewHolder
-onResponse MyViewHolder
-onFailure MyViewHolder
-fetchFeed MyViewHolder
-onResponse MyViewHolder
-onFailure MyViewHolder
-resetBtn MyViewHolder
-onRestart MyViewHolder
-onStart MyViewHolder
+main Person Test /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case7/interfaceTest.java /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case7/interfaceTest.java
+talk Test Student /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case7/interfaceTest.java /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case7/interfaceTest.java
+talk Person Student /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case7/interfaceTest.java /C:/Users/ljj/Desktop/demo/Educoder/codes/p01647589/pqu4jtbn/src/case7/interfaceTest.java

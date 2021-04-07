@@ -9,7 +9,9 @@ function run(uri) {
     vscode.commands.executeCommand('extension.findfile', uri).then(result => {
         console.log('命令结果', result);
     });
-    runCommand('extension.getFeature');
+    vscode.commands.executeCommand('extension.getFeature', uri).then(result => {
+        console.log('命令结果', result);
+    });
     runCommand('extension.test');
 }
 

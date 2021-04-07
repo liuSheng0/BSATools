@@ -8,7 +8,7 @@ const DIRNAME =  __dirname + '/../../';
 const method_info_path = DIRNAME + 'data/methodinfo.txt';
 const class_info_path = DIRNAME + 'data/classinfo.txt';
 const dis_path = DIRNAME + 'data/dis.txt';
-const out_path = DIRNAME + 'res/predictresult.txt';
+const out_path = DIRNAME + 'res/predictresult.html';
 const model_path = DIRNAME + 'pymodel/model.pb'
 const info_path = DIRNAME + 'data/info.txt';
 
@@ -32,6 +32,9 @@ function run() {
         console.log('子进程已退出，退出码 '+code);
         if(code==0) {
             vscode.window.showInformationMessage('特征依恋预测成功');
+            vscode.commands.executeCommand('extension.showres').then(result => {
+                console.log('命令结果', result);
+            });
         }
         else {
             vscode.window.showErrorMessage('特征依恋预测失败');

@@ -18,13 +18,14 @@ module.exports = function(context) {
     context.subscriptions.push(vscode.commands.registerCommand('extension.getFeature', run));
 };
 
-function run() {
+function run(uri) {
     let classList = [];//列表用于存储全部类
     let methodList = [];//列表用于存储全部方法
     let classMethods = new Array();//字典用于存储类的全部方法
     let propertyClass = new Array();//字典用于存储在类内方法外创建的类的实例
     let methodUsese = new Array();//字典用于存储使用方法的全部实例
     let methodTagNowClasses = [];//用于存储方法的目标类和自身类
+    let classUri = new Array();
 
     try { fs.unlinkSync(methodinfoPath) } catch {;}
     try { fs.unlinkSync(classinfoPath) } catch {;}
@@ -57,6 +58,9 @@ function run() {
                         classList.push(className);
                         if(!classMethods.hasOwnProperty(className)) {
                             classMethods[className] = [];
+                        }
+                        if(!classUri.hasOwnProperty(className)) {
+                            classUri[className] = filedir;
                         }
                         flagClassMethod = 0;
                         nowClassOrMethod = className;
@@ -129,6 +133,9 @@ function run() {
             classList.push(className);
             if(!classMethods.hasOwnProperty(className)) {
                 classMethods[className] = [];
+            }
+            if(!classUri.hasOwnProperty(className)) {
+                classUri[className] = uri.path;
             }
             flagClassMethod = 0;
             nowClassOrMethod = className;
@@ -271,7 +278,7 @@ function run() {
     //开始生成数据集
     methodTagNowClasses.forEach(method => {
         let disTagClass = unique(method.disTagClass);
-        let tagClasses = classList.filter(function (val) { return !(disTagClass.indexOf(val) > -1) });
+        let tagClasses = unique(classList.filter(function (val) { return !(disTagClass.indexOf(val) > -1) }));
         tagClasses.forEach(tagClass => {
             let tagClassMethodStr = "";
             if (classMethods.hasOwnProperty(tagClass)) {
@@ -286,7 +293,7 @@ function run() {
             let writeline_dis = TCTagCount.toFixed(20) + " " + TCNowCount.toFixed(20) + '\n';
             let writeline_class_name = (sr.AdjustStr(tagClass) + " " + sr.AdjustStr(method.nowClass) + " " + tagClassMethodStr).trim() + '\n';
             let writeline_method_name = (sr.AdjustStr(method.methodName) + " " + method.methodParameters).trim() + '\n';
-            let writeline_res = method.methodName + " " + tagClass + '\n';
+            let writeline_res = method.methodName + " " + tagClass + " " + method.nowClass + " "+ classUri[tagClass] +" "+ classUri[method.nowClass]+ '\n';
             writefile(methodinfoPath, writeline_method_name);
             writefile(classinfoPath, writeline_class_name);
             writefile(disPath, writeline_dis);
