@@ -20,7 +20,7 @@ module.exports = function(context) {
     context.subscriptions.push(vscode.commands.registerCommand('extension.showres', function () {
         const panel = vscode.window.createWebviewPanel(
             'testWebview', // viewType
-            "特征依恋检测结果", // 视图标题
+            "代码坏味检测结果", // 视图标题
             vscode.ViewColumn.Active, // 显示在编辑器的哪个部位
             {
                 enableScripts: true, // 启用JS，默认禁用
@@ -79,6 +79,8 @@ function getPosition(editor, word) {
         let index = line.indexOf(word);
         if(index != -1 && jj.judgeClass(line)) {
             range.push(new vscode.Range(lineflag, 0, lineflag, line.length));
+        } else if(index != -1 && jj.judgeMethod(line)[0]) {
+            range.push(new vscode.Range(lineflag, index, lineflag, index + line.length));
         }
         lineflag += 1;
     });

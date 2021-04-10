@@ -9,8 +9,9 @@ import tensorflow as tf
 #from kegra.utils import *
 import numpy as np
 
+HEAD = '<head><style>table tr#b{ background:#333} table tr#w{ background:#555} table td{ text-align: center; padding-top: 5px; padding-bottom: 5px;}</style></head>'
 SCRIPT = "<script>const testMode = false;const vscode = testMode ? {} : acquireVsCodeApi();const callbacks = {};function openFileInVscode(path,words) {vscode.postMessage({command: 'openFileInVscode',text: path,words: words})}</script>"
-JUMP = 'href="javascript:;" onclick="openFileInVscode(\'{}\',\'{}\')"'
+JUMP = 'href="可信度：{}" onclick="openFileInVscode(\'{}\',\'{}\')"'
 
 def putTxtInfo(test_y_out, out_path, info_path) :
     # test_y_out为数组（为0 的概率，为1的概率）
@@ -20,7 +21,7 @@ def putTxtInfo(test_y_out, out_path, info_path) :
         os.remove(TARGETPATH)
     resultWriter = open(TARGETPATH, 'w', encoding = "utf-8")
 
-    resultWriter.write('<html><body><table><tr><th>方法名</th><th>自身类名</th><th>检测结果</th><th>重构推荐</th></tr>')
+    resultWriter.write('<html>{}<body style="width:100%"><table width=100%><tr id="b"><th>方法名</th><th>自身类名</th><th>检测结果</th><th>重构推荐</th></tr>'.format(HEAD))
 
     f = open(info_path, 'r')
 
@@ -29,8 +30,16 @@ def putTxtInfo(test_y_out, out_path, info_path) :
 
     tagClassesRes = {"tagClasses" : [], "predictRes" : [], "res" : 1 , "nowMethod": ""}
     aflag = False
+    lowRes = []
     modifyClasses = []
+    tagClassPredictRes = {}
+    methodNowClass = {}
     classPathInfo = {}
+    nowMethod = ""
+    nowNowClass = ""
+    nowMethodRes = 1
+    idStr = 'id="b"'
+    idStrW = 'id="w"'
 
 
     for result in test_y_out:
@@ -41,75 +50,69 @@ def putTxtInfo(test_y_out, out_path, info_path) :
         else:
             re = 1
         lineName = line.split(" ")
-        try:
-            methodName = lineName[0]
-        except:
-            methodName = "NaN"
-        try:
-            tagClassName = lineName[1]
-        except:
-            tagClassName = "NaN"
-        try:
-            nowClassName = lineName[2]
-        except:
-            nowClassName = "NaN"
-        try:
-            tagClassPath = lineName[3]
-        except:
-            tagClassPath = "NaN"
-        try:
-            nowClassPath = lineName[4]
-        except:
-            nowClassPath = "NaN"
-        if(nowClassName[0] == '/'):
+        methodName = lineName[0]
+        tagClassName = lineName[1]
+        nowClassName = lineName[2]
+        tagClassPath = lineName[3]
+        nowClassPath = lineName[4]
+
+        classPathInfo[nowClassName] = nowClassPath
+        classPathInfo[tagClassName] = tagClassPath
+        tagClassPredictRes[tagClassName] = result[1]
+        if(nowClassPath[0] == '/'):
             classPathInfo[nowClassName] = nowClassPath[1:]
-        else:
-            classPathInfo[nowClassName] = nowClassPath
         if(tagClassName[0] == '/'):
             classPathInfo[tagClassName] = tagClassPath[1:]
-        else:
-            classPathInfo[tagClassName] = tagClassPath
-        if (methodName == tagClassesRes['nowMethod']) :
-            tagClassesRes["tagClasses"].append(tagClassName)
-            tagClassesRes["predictRes"].append(result[1])
-            tagClassesRes["res"] *= re
+        
+
+        if (methodName == nowMethod and nowClassName == nowNowClass) :
+            nowMethodRes *= re
             if(re == 0):
                 modifyClasses.append(tagClassName)
         else:
-            if aflag:
-                if tagClassesRes["res"] == 0 :
-                    restr = "可能存在特征依恋！"
+            if aflag and nowMethod != "":
+                if nowMethodRes == 0 :
+                    restr = "存在特征依恋可能性高！"
                 else :
-                    restr = "不存在特征依恋"
-                resultWriter.write("<tr><td {}>{}</td><td {}>{}</td><td>{}</td>".format(JUMP.format(classPathInfo[nowClassName], methodName) ,methodName, JUMP.format(classPathInfo[nowClassName], nowClassName), nowClassName, restr))
+                    restr = "存在特征依恋可能性较低"
 
-                if(tagClassesRes["res"] == 0) :
+                if(nowMethodRes == 0) :
+                    resultWriter.write("<tr {}><td {}>{}</td><td><a {}>{}</a></td><td>{}</td>".format(idStr ,JUMP.format("", classPathInfo[nowNowClass], nowMethod), nowMethod, JUMP.format("", classPathInfo[nowNowClass], nowNowClass), nowNowClass, restr))
                     resultWriter.write("<td>建议尝试将该方法移动到以下类中：<br>")
                     for modifyClass in modifyClasses:
-                        resultWriter.write("<a {}>{}<br></a>".format(JUMP.format(classPathInfo[modifyClass], modifyClass), modifyClass))
-                    resultWriter.write("</td>")
-                resultWriter.write("</tr>")
-            tagClassesRes = {"tagClasses" : [], "predictRes" : [], "res" : re, "nowMethod": methodName}
-            tagClassesRes["tagClasses"].append(tagClassName)
-            tagClassesRes["predictRes"].append(result[1])
+                        resultWriter.write("<a {}>{}<br></a>".format(JUMP.format(str(tagClassPredictRes[modifyClass]), classPathInfo[modifyClass], modifyClass), modifyClass))
+                    resultWriter.write("</td></tr>")
+                else:
+                    lowRes.append("<tr {}><td {}>{}</td><td><a {}>{}</a></td><td>{}</td><td></td></tr>".format(idStrW ,JUMP.format("", classPathInfo[nowNowClass], nowMethod), nowMethod, JUMP.format("", classPathInfo[nowNowClass], nowNowClass), nowNowClass, restr))
+
+            nowMethod = methodName
+            nowNowClass = nowClassName
+            nowMethodRes = re
+            methodNowClass[methodName] = nowClassName
+            
             modifyClasses = []
             if(re == 0):
                 modifyClasses.append(tagClassName)
             aflag = True
         linenum+=1
-    if tagClassesRes["nowMethod"] != "" and not aflag:
-        if tagClassesRes["res"] == 0 :
+
+    if nowMethod != "" and not aflag:
+        if nowMethodRes == 0 :
             restr = "可能存在特征依恋！"
         else :
             restr = "不存在特征依恋"
-        resultWriter.write("<tr><td {}>{}</td><td {}>{}</td><td>{}</td>".format(JUMP.format(classPathInfo[nowClassName], methodName) ,methodName, JUMP.format(classPathInfo[nowClassName], nowClassName), nowClassName, restr))
-
-        if(tagClassesRes["res"] == 0) :
-            resultWriter.write("<td>将该方法移动到以下类中：")
+        
+        if(nowMethodRes == 0) :
+            resultWriter.write("<tr {}><td {}>{}</td><td><a {}>{}</a></td><td>{}</td>".format(idStr ,JUMP.format("", classPathInfo[nowNowClass], nowMethod), nowMethod, JUMP.format("", classPathInfo[nowNowClass], nowNowClass), nowNowClass, restr))
+            resultWriter.write("<td>建议尝试将该方法移动到以下类中：<br>")
             for modifyClass in modifyClasses:
-                resultWriter.write(modifyClass + " ")
-            resultWriter.write("</td>")
-        resultWriter.write("</tr>")
+                resultWriter.write("<a {}>{}<br></a>".format(JUMP.format(str(tagClassPredictRes[modifyClass]), classPathInfo[modifyClass], modifyClass), modifyClass))
+            resultWriter.write("</td></tr>")
+        else:
+            lowRes.append("<tr {}><td {}>{}</td><td><a {}>{}</a></td><td>{}</td><td></td></tr>".format(idStrW ,JUMP.format("", classPathInfo[nowNowClass], nowMethod), nowMethod, JUMP.format("", classPathInfo[nowNowClass], nowNowClass), nowNowClass, restr))
+    
+    for alowRes in lowRes:
+        resultWriter.write(alowRes)
     resultWriter.write("</table>{}</body></html>".format(SCRIPT))
     resultWriter.close()
 
@@ -146,21 +149,24 @@ if __name__ == '__main__':
     test_class_info = []
     test_method_info = []
 
-    with open(method_info_path, 'r') as file_to_read:
-        for line in file_to_read.readlines():
-            test_method_info.append(line)
+    try:
+        with open(method_info_path, 'r') as file_to_read:
+            for line in file_to_read.readlines():
+                test_method_info.append(line)
 
-    with open(class_info_path, 'r') as file_to_read:
-        for line in file_to_read.readlines():
-            test_class_info.append(line)
+        with open(class_info_path, 'r') as file_to_read:
+            for line in file_to_read.readlines():
+                test_class_info.append(line)
 
-    with open(dis_path, 'r') as file_to_read:
-        for line in file_to_read.readlines():  # 读取一行数据
-            values = line.split()  # 将这一行数据按照空格分割开
-            distance = values[:2]  # 取values前2个数据
-            test_distances.append(distance)
-            label = values[2:]  # 取values最后一个数据
-            test_labels.append(label)
+        with open(dis_path, 'r') as file_to_read:
+            for line in file_to_read.readlines():  # 读取一行数据
+                values = line.split()  # 将这一行数据按照空格分割开
+                distance = values[:2]  # 取values前2个数据
+                test_distances.append(distance)
+                label = values[2:]  # 取values最后一个数据
+                test_labels.append(label)
+    except:
+        exit(2)
 
     test_tokenizer_class = Tokenizer(num_words=None)
     test_tokenizer_method = Tokenizer(num_words=None)
@@ -212,7 +218,7 @@ if __name__ == '__main__':
             test_y_out = sess.run(Y, feed_dict={class_info_input:test_class_data,method_name_input:test_method_data,Dis_in:np.array(x_val_dis)})
             # print("test_y_out:{}".format(test_y_out)
             print(test_y_out)
-
+            
             putTxtInfo(test_y_out, out_path, info_path)
 
     exit(0)

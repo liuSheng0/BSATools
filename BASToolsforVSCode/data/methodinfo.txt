@@ -7,17 +7,17 @@
 * * * * classID
 * * * * classID
 * * * * classID
+* * * * equals obj
+* * * * equals obj
+* * * * equals obj
+* * * * equals obj
+* * * * equals obj
+* * * * equals obj
 * * * * classID
 * * * * equals obj
 * * * * equals obj
 * * * * equals obj
 * * * * equals obj
-* * * * equals obj
-* * * * equals obj
-* * * * equals obj
-* * * * equals obj
-* * * * equals obj
-* * * * equals obj
 * * * * ClassAtributes
 * * * * ClassAtributes
 * * * * ClassAtributes
@@ -83,16 +83,6 @@ all methods.get number of excluded
 * * * im.is resolved
 * * * im.is resolved
 * * * im.is resolved
-* * * im.is resolved
-* * * im.is resolved
-* * * * catch e
-* * * * catch e
-* * * * catch e
-* * * * catch e
-* * * * catch e
-* * * * catch e
-* * * * catch e
-* * * * catch e
 * * * *
 * * * *
 * * * *
@@ -146,16 +136,16 @@ all methods.get number of excluded
 * * * * allClassSimilarity
 * * * * allClassSimilarity
 * * * * allClassSimilarity
-* * * * Comparator<Object>
-* * * * Comparator<Object>
-* * * * Comparator<Object>
-* * * * Comparator<Object>
-* * * * Comparator<Object>
-* * * * Comparator<Object>
-* * * * Comparator<Object>
-* * * * Comparator<Object>
-* * * * Comparator<Object>
-* * * * Comparator<Object>
+* * * * Comparator
+* * * * Comparator
+* * * * Comparator
+* * * * Comparator
+* * * * Comparator
+* * * * Comparator
+* * * * Comparator
+* * * * Comparator
+* * * * Comparator
+* * * * Comparator
 * * * * compare o1 o2
 * * * * compare o1 o2
 * * * * compare o1 o2
@@ -197,6 +187,12 @@ all methods.get number of excluded
 * * * * normalize allClassSimilarity
 * * * * normalize allClassSimilarity
 * * * * normalize allClassSimilarity
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
 * * * * normalize allClassSimilarity
 * * * * normalize allClassSimilarity
 * * * * normalize allClassSimilarity
@@ -204,22 +200,6 @@ all methods.get number of excluded
 * * * *
 * * * *
 * * * *
-* * * *
-* * * *
-* * * *
-* * * *
-* * * *
-* * * *
-* * * * else
-* * * * else
-* * * * else
-* * * * else
-* * * * else
-* * * * else
-* * * * else
-* * * * else
-* * * * else
-* * * * else
 * * write excel format contador strategy
 * * write excel format contador strategy
 * * write excel format contador strategy

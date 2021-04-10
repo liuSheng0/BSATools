@@ -342,7 +342,9 @@ function readfile(path) {
 
 function predeal(uri) {
     let rootPath = uri.path.replace(/src\/.*/, "");
+    console.log(rootPath);
     rootPath = rootPath.replace(/\/c:\/|\/C:\//,"C:/") + "src/";
+    let rootPathMain = rootPath + "main/java/";
     console.log(rootPath);
     let editor = vscode.window.activeTextEditor;
     if(!editor) {
@@ -362,8 +364,10 @@ function predeal(uri) {
             let importName = jj.judgeImport(line, packageName);
             if(importName) {
                 predealfiledirs.push(rootPath + importName.replace(/\./g,"/") +'.java');
+                predealfiledirs.push(rootPathMain + importName.replace(/\./g,"/") +'.java');
             }
         }
     });
+    console.log(predealfiledirs);
     showInfMessage("预处理成功");
 }

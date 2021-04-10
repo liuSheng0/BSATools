@@ -36,6 +36,9 @@ function run() {
                 console.log('命令结果', result);
             });
         }
+        else if(code==2) {
+            vscode.window.showWarningMessage('该文件不存在特征依恋');
+        }
         else {
             vscode.window.showErrorMessage('特征依恋预测失败');
         }
