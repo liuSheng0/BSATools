@@ -7,17 +7,17 @@
 * * * * classID
 * * * * classID
 * * * * classID
-* * * * equals obj
-* * * * equals obj
-* * * * equals obj
-* * * * equals obj
-* * * * equals obj
-* * * * equals obj
 * * * * classID
 * * * * equals obj
 * * * * equals obj
 * * * * equals obj
 * * * * equals obj
+* * * * equals obj
+* * * * equals obj
+* * * * equals obj
+* * * * equals obj
+* * * * equals obj
+* * * * equals obj
 * * * * ClassAtributes
 * * * * ClassAtributes
 * * * * ClassAtributes
@@ -187,15 +187,15 @@ all methods.get number of excluded
 * * * * normalize allClassSimilarity
 * * * * normalize allClassSimilarity
 * * * * normalize allClassSimilarity
-* * * *
-* * * *
-* * * *
-* * * *
-* * * *
-* * * *
 * * * * normalize allClassSimilarity
 * * * * normalize allClassSimilarity
 * * * * normalize allClassSimilarity
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
+* * * *
 * * * *
 * * * *
 * * * *

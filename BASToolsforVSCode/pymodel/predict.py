@@ -72,13 +72,13 @@ def putTxtInfo(test_y_out, out_path, info_path) :
         else:
             if aflag and nowMethod != "":
                 if nowMethodRes == 0 :
-                    restr = "存在特征依恋可能性高！"
+                    restr = "Featury Envy"
                 else :
-                    restr = "存在特征依恋可能性较低"
+                    restr = "Featury Envy"
 
                 if(nowMethodRes == 0) :
                     resultWriter.write("<tr {}><td {}>{}</td><td><a {}>{}</a></td><td>{}</td>".format(idStr ,JUMP.format("", classPathInfo[nowNowClass], nowMethod), nowMethod, JUMP.format("", classPathInfo[nowNowClass], nowNowClass), nowNowClass, restr))
-                    resultWriter.write("<td>建议尝试将该方法移动到以下类中：<br>")
+                    resultWriter.write("<td>Advise Move To:<br>")
                     for modifyClass in modifyClasses:
                         resultWriter.write("<a {}>{}<br></a>".format(JUMP.format(str(tagClassPredictRes[modifyClass]), classPathInfo[modifyClass], modifyClass), modifyClass))
                     resultWriter.write("</td></tr>")
@@ -104,7 +104,7 @@ def putTxtInfo(test_y_out, out_path, info_path) :
         
         if(nowMethodRes == 0) :
             resultWriter.write("<tr {}><td {}>{}</td><td><a {}>{}</a></td><td>{}</td>".format(idStr ,JUMP.format("", classPathInfo[nowNowClass], nowMethod), nowMethod, JUMP.format("", classPathInfo[nowNowClass], nowNowClass), nowNowClass, restr))
-            resultWriter.write("<td>建议尝试将该方法移动到以下类中：<br>")
+            resultWriter.write("<td>Advise Move To:<br>")
             for modifyClass in modifyClasses:
                 resultWriter.write("<a {}>{}<br></a>".format(JUMP.format(str(tagClassPredictRes[modifyClass]), classPathInfo[modifyClass], modifyClass), modifyClass))
             resultWriter.write("</td></tr>")
